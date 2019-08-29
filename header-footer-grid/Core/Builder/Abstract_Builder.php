@@ -365,9 +365,10 @@ abstract class Abstract_Builder implements Builder {
 				'tab'                   => SettingsManager::TAB_STYLE,
 				'section'               => $row_setting_id,
 				'label'                 => __( 'Row Background', 'neve' ),
-				'type'                  => 'neve_background_control',
+				'type'                  => '\Neve\Customizer\Controls\React\Shell',
 				'live_refresh_selector' => $row_class,
 				'options'               => [
+					'type'                  => 'neve_background_control',
 					'priority' => 100,
 				],
 				'transport'             => 'postMessage',

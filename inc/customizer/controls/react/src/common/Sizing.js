@@ -11,6 +11,8 @@ const { Component } = wp.element;
 class SizingControl extends Component {
 	constructor(props) {
 		super( props );
+
+		console.log(props)
 	}
 
 	render() {
@@ -27,8 +29,8 @@ class SizingControl extends Component {
 															type="number"
 															id={i.type + '-input'}
 															value={i.value && i.value}
-															min={this.props.min || -300}
-															max={this.props.max || 300}
+															min={this.props.min}
+															max={this.props.max}
 															onFocus={onToggle}
 															onFocusOut={onToggle}
 															onChange={e => this.props.onChange( i.type,
@@ -44,8 +46,8 @@ class SizingControl extends Component {
 																initialPosition={i.value && i.value || 0}
 																beforeIcon="minus"
 																afterIcon="plus"
-																min={this.props.min || -300}
-																max={this.props.max || 300}
+																min={this.props.min}
+																max={this.props.max}
 																onChange={e => this.props.onChange( i.type,
 																		e === 0 ? 0 : e || '' )}
 														/>

@@ -30,9 +30,21 @@ class SpacingComponent extends Component {
 		if ( !this.shouldValuesBeLinked() ) {
 			this.state.linked = false;
 		}
+
+		let defaultParams = {
+			min: -300,
+			max: 300,
+		} 
+				
+		this.controlParams = props.control.params.input_attrs ? {
+			...defaultParams,
+			...props.control.params.input_attrs
+		} : defaultParams;
+
 	}
 
 	render() {
+
 		let options = [
 			{
 				'type': 'top',
@@ -62,6 +74,8 @@ class SpacingComponent extends Component {
 							}}
 					>
 						<SizingControl
+								min={this.controlParams.min}
+								max={this.controlParams.max}
 								options={options}
 								linked={this.state.linked}
 								onLinked={() => this.setState( { linked: !this.state.linked } )}
