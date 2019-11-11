@@ -9,6 +9,7 @@
  */
 
 namespace HFG\Core\Settings;
+
 use Neve\Customizer\Controls\Tabs;
 
 /**
@@ -19,8 +20,8 @@ use Neve\Customizer\Controls\Tabs;
 class Manager {
 
 	const TAB_GENERAL = 'general';
-	const TAB_LAYOUT  = 'layout';
-	const TAB_STYLE   = 'style';
+	const TAB_LAYOUT = 'layout';
+	const TAB_STYLE = 'style';
 
 	/**
 	 * Holds an instance of this class.
@@ -78,6 +79,7 @@ class Manager {
 		'tab'               => false,
 		'transport'         => false,
 		'sanitize_callback' => false,
+		'active_callback'    => false,
 		'preview_default'   => false,
 		'default'           => false,
 	];
@@ -112,7 +114,7 @@ class Manager {
 			'refresh'     => true,
 			'postMessage' => true,
 		];
-		$section                = '';
+		$section = '';
 		foreach ( $this->get_settings_group( $group ) as $id ) {
 
 			if ( ! isset( self::$settings[ $id ] ) ) {
@@ -147,6 +149,10 @@ class Manager {
 				],
 				isset( $arguments['options'] ) ? $arguments['options'] : []
 			);
+
+			if( isset( $arguments['active_callback'] ) ) {
+				$control_args['active_callback'] = $arguments['active_callback'];
+			}
 
 			if ( ! is_subclass_of( $type, '\WP_Customize_Control' ) ) {
 				$control_args['type'] = $type;
@@ -294,8 +300,6 @@ class Manager {
 	 * @return bool;
 	 */
 	public function add( $arguments = array() ) {
-
-
 		if ( count( array_diff_key( array_filter( $this->fields ), $arguments ) ) !== 0 ) {
 			return false;
 		}

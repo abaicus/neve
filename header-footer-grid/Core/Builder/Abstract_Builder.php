@@ -773,8 +773,8 @@ abstract class Abstract_Builder implements Builder {
 			}
 
 			if ( ! empty( $background['focusPoint'] ) &&
-					! empty( $background['focusPoint']['x'] ) &&
-					! empty( $background['focusPoint']['y'] ) ) {
+			     ! empty( $background['focusPoint']['x'] ) &&
+			     ! empty( $background['focusPoint']['y'] ) ) {
 				$css_setup['background-position'] = round( $background['focusPoint']['x'] * 100 ) . '% ' . round( $background['focusPoint']['y'] * 100 ) . '%';
 			}
 
@@ -799,7 +799,7 @@ abstract class Abstract_Builder implements Builder {
 		}
 
 		$css_array[ $selector . ',' . $selector . '.dark-mode,' . $selector . '.light-mode' ] = $css_setup;
-		$css_array = apply_filters( 'neve_row_style', $css_array, $this->control_id, $this->get_id(), $row_index, $selector );
+		$css_array                                                                            = apply_filters( 'neve_row_style', $css_array, $this->control_id, $this->get_id(), $row_index, $selector );
 
 		return $css_array;
 	}
@@ -807,7 +807,7 @@ abstract class Abstract_Builder implements Builder {
 	/**
 	 * Render device markup.
 	 *
-	 * @param string $device_name Device id.
+	 * @param string $device_name    Device id.
 	 * @param array  $device_details Device meta.
 	 */
 	public function render_device( $device_name, $device_details ) {
@@ -824,7 +824,7 @@ abstract class Abstract_Builder implements Builder {
 	 * Render components in the row.
 	 *
 	 * @param null|string $device Device id.
-	 * @param null|array  $row Row details.
+	 * @param null|array  $row    Row details.
 	 */
 	public function render_components( $device = null, $row = null ) {
 
@@ -915,11 +915,10 @@ abstract class Abstract_Builder implements Builder {
 				$render_index ++;
 			}
 
-			// Use alignament only of non-auto width element.
+			// Use alignment only of non-auto width element.
 			if ( ! $is_auto_width && isset( $render_buffer[ $render_index ] ) ) {
 				$render_buffer[ $render_index ]['align'] = $align;
 			}
-
 
 			$is_first = false;
 			$is_last  = false;
@@ -952,9 +951,10 @@ abstract class Abstract_Builder implements Builder {
 			}
 			$render_buffer[ $render_index ]['is_last']      = $is_last;
 			$render_buffer[ $render_index ]['components'][] = [
-				'component' => $component,
-				'offset'    => $x,
-				'width'     => $width,
+				'component'             => $component,
+				'offset'                => $x,
+				'width'                 => $width,
+				'merged_with_neighbour' => $is_auto_width
 			];
 			$component_location['is_auto_width']            = $is_auto_width;
 			$component_location['align']                    = $align;
@@ -982,6 +982,9 @@ abstract class Abstract_Builder implements Builder {
 			}
 			echo sprintf( '<div class="%s">', esc_attr( join( ' ', $classes ) ) );
 			foreach ( $render_groups['components'] as $component_data ) {
+				if ( $component_data['merged_with_neighbour'] ) {
+					$component_data['component']->is_merged = true;
+				}
 				$component_data['component']->current_x     = $x;
 				$component_data['component']->current_width = $width;
 				self::$current_component                    = $component_data['component']->get_id();
