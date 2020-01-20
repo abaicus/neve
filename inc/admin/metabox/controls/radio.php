@@ -39,6 +39,6 @@ class Radio extends Control_Base {
 		}
 		$markup .= '</p>';
 
-		echo $markup;
+		echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

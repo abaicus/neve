@@ -2,9 +2,16 @@
     "use strict";
     wp.tiCustomizeButton = {
         init: function() {
-            jQuery("#customize-theme-controls").on("click", ".menu-shortcut", function(e) {
+            $("#customize-theme-controls").on("click", ".menu-shortcut", function(e) {
                 wp.customize.section("menu_locations").focus();
                 e.preventDefault();
+            });
+            $("#customize-theme-controls").on("click", ".neve-control-focus", function(e) {
+                e.preventDefault();
+                var control_id = $(this).data("control-to-focus");
+                if (typeof control_id !== "undefined") {
+                    wp.customize.control(control_id).focus();
+                }
             });
         }
     };
@@ -221,7 +228,7 @@ wp.customize.controlConstructor["range-value"] = wp.customize.Control.extend({
             syncRangeText(slider, input, "slider");
             updateValues(control);
         });
-        theme_controls.on("keyup change", ".range-slider-value", function() {
+        theme_controls.on("keyup change input", ".range-slider-value", function() {
             var control = jQuery(this).parent().parent();
             var slider = jQuery(this).prev();
             var input = jQuery(this);
@@ -271,7 +278,7 @@ wp.customize.controlConstructor["responsive-number"] = wp.customize.Control.exte
     ready: function() {
         "use strict";
         var control = this;
-        this.container.on("change keyup paste", "input.responsive-number--input, select.responsive-number--select", function() {
+        this.container.on("change keyup paste input", "input.responsive-number--input, select.responsive-number--select", function() {
             control.updateValue();
         });
         this.container.on("click touchstart", ".reset-number-input", function() {
@@ -318,16 +325,16 @@ jQuery(document).ready(function($) {
         },
         manageSwitchers: function() {
             jQuery(".customize-control .responsive-switchers button").on("click", function(event) {
-                var $this = $(this), $devices = $(".responsive-switchers"), $device = $(event.currentTarget).data("device"), $control = $(".customize-control .has-media-queries"), $body = $(".wp-full-overlay"), $footer_devices = $(".wp-full-overlay-footer .devices");
-                $devices.find("button").removeClass("active");
-                $devices.find("button.preview-" + $device).addClass("active");
-                $control.find(".control-wrap").removeClass("active");
-                $control.find(".control-wrap." + $device).addClass("active");
-                $body.removeClass("preview-desktop preview-tablet preview-mobile").addClass("preview-" + $device);
-                $footer_devices.find("button").removeClass("active").attr("aria-pressed", false);
-                $footer_devices.find("button.preview-" + $device).addClass("active").attr("aria-pressed", true);
-                if ($this.hasClass("preview-desktop")) {
-                    $devices.toggleClass("responsive-switchers-open");
+                var $self = $(this), devices = $(".responsive-switchers"), device = $(event.currentTarget).data("device"), control = $(".customize-control .has-media-queries"), body = $(".wp-full-overlay"), footerDevices = $(".wp-full-overlay-footer .devices");
+                devices.find("button").removeClass("active");
+                devices.find("button.preview-" + device).addClass("active");
+                control.find(".control-wrap").removeClass("active");
+                control.find(".control-wrap." + device).addClass("active");
+                body.removeClass("preview-desktop preview-tablet preview-mobile").addClass("preview-" + device);
+                footerDevices.find("button").removeClass("active").attr("aria-pressed", "false");
+                footerDevices.find("button.preview-" + device).addClass("active").attr("aria-pressed", "true");
+                if ($self.hasClass("preview-desktop")) {
+                    devices.toggleClass("responsive-switchers-open");
                 }
             });
         },
@@ -348,6 +355,8 @@ jQuery(document).ready(function($) {
                 control.find(".tablet-range").removeClass("active");
                 control.find(".mobile-range").removeClass("active");
                 control.find("." + device + "-range").addClass("active");
+                control.find(".control-wrap").removeClass("active");
+                control.find(".control-wrap." + device).addClass("active");
             });
         }
     };
@@ -395,7 +404,7 @@ jQuery(document).ready(function($) {
                                         }
                                     }
                                 }
-                                if (typeof currentControl !== "undefined") {
+                                if (typeof currentControl === "object" && currentControl.hasOwnProperty(selector)) {
                                     selector = currentControl.selector;
                                     jQuery(selector).hide();
                                 }
@@ -467,35 +476,29 @@ wp.customize.controlConstructor["interface-tabs"] = wp.customize.Control.extend(
                 });
             }
         });
-        this.init();
-        this.handleClick();
+        var self = this;
+        jQuery(window).on("load", function() {
+            self.init();
+            self.handleClick();
+        });
     },
     init: function() {
         var control = this;
         var section = control.section();
-        setTimeout(function() {
-            jQuery('li[id^="customize-control-sidebars_widgets"]').each(function() {
-                jQuery(this).on("DOMNodeInserted", function() {
-                    jQuery(".neve-customizer-tab.active > label").trigger("click");
-                });
-            });
-        }, 100);
-        wp.customize.bind("ready", function() {
-            control.hideAllControls(section);
-            var tab = Object.keys(control.params.controls)[0];
-            var controlsToShow = control.params.controls[tab];
-            var allControls = [];
-            for (var controlName in controlsToShow) {
-                if (controlsToShow.hasOwnProperty(controlName)) {
-                    if (jQuery.isEmptyObject(controlsToShow[controlName]) === false && typeof wp.customize.control(controlName) !== "undefined") {
-                        var subTabValue = wp.customize.control(controlName).setting._value;
-                        allControls = allControls.concat(controlsToShow[controlName][subTabValue]);
-                    }
-                    allControls.push(controlName);
+        control.hideAllControls(section);
+        var tab = control.params.controls.general ? "general" : control.params.controls.layout ? "layout" : control.params.controls.style ? "style" : Object.keys(control.params.controls)[0];
+        var controlsToShow = control.params.controls[tab];
+        var allControls = [];
+        for (var controlName in controlsToShow) {
+            if (controlsToShow.hasOwnProperty(controlName)) {
+                if (jQuery.isEmptyObject(controlsToShow[controlName]) === false && typeof wp.customize.control(controlName) !== "undefined") {
+                    var subTabValue = wp.customize.control(controlName).setting._value;
+                    allControls = allControls.concat(controlsToShow[controlName][subTabValue]);
                 }
+                allControls.push(controlName);
             }
-            control.showControls(allControls, section);
-        });
+        }
+        control.showControls(allControls, section);
     },
     hideAllControls: function(section) {
         var controls = wp.customize.section(section).controls();
@@ -537,7 +540,7 @@ wp.customize.controlConstructor["interface-tabs"] = wp.customize.Control.extend(
     showControls: function(controls, section) {
         for (var i in controls) {
             var controlName = controls[i];
-            if (controlName === "widgets") {
+            if (controlName === "widgets" || controlName.indexOf("sidebars_widgets") !== -1) {
                 var sectionContainer = wp.customize.section(section).container;
                 jQuery(sectionContainer).children('li[class*="widget"]').css("display", "list-item");
             } else {
@@ -546,7 +549,26 @@ wp.customize.controlConstructor["interface-tabs"] = wp.customize.Control.extend(
                     jQuery(selector).show();
                 }
             }
+            var control = wp.customize.control(controlName);
+            if (typeof control !== "undefined") {
+                var status = wp.customize.control(controlName).active();
+                if (status === true) {
+                    jQuery(wp.customize.control(controlName).selector).show();
+                } else {
+                    jQuery(wp.customize.control(controlName).selector).hide();
+                }
+            }
         }
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    if (typeof upsellConfig !== "undefined") {
+        var markup = '<div class="nv-upsell"><div class="nv-upsell-content">' + upsellConfig.text + '</div><a target="_blank" href="' + upsellConfig.button_url + '" class="button button-primary">' + upsellConfig.button_text + "</a></div>";
+        var elChild = document.createElement("li");
+        elChild.innerHTML = markup;
+        var el = document.getElementById("sub-accordion-panel-hfg_header");
+        el.appendChild(elChild);
     }
 });
 //# sourceMappingURL=customizer-controls.js.map

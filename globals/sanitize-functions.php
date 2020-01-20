@@ -70,7 +70,7 @@ function neve_sanitize_checkbox( $value ) {
  * @return bool
  */
 function neve_is_json( $string ) {
-	return is_string( $string ) && is_array( json_decode( $string, true ) ) ? true : false;
+	return is_string( $string ) && is_array( json_decode( $string, true ) );
 }
 
 /**
@@ -90,4 +90,114 @@ function neve_sanitize_range_value( $input ) {
 	$range_value['mobile']  = ! empty( $range_value['mobile'] ) || $range_value['mobile'] === '0' ? floatval( $range_value['mobile'] ) : '';
 
 	return json_encode( $range_value );
+}
+
+/**
+ * Sanitize font weight values.
+ *
+ * @param string $value font-weight value.
+ *
+ * @return string
+ */
+function neve_sanitize_font_weight( $value ) {
+	$allowed = array( '100', '200', '300', '400', '500', '600', '700', '800', '900' );
+
+	if ( ! in_array( (string) $value, $allowed, true ) ) {
+		return '300';
+	}
+
+	return $value;
+}
+
+/**
+ * Sanitize font weight values.
+ *
+ * @param string $value font-weight value.
+ *
+ * @return string
+ */
+function neve_sanitize_text_transform( $value ) {
+	$allowed = array( 'none', 'capitalize', 'uppercase', 'lowercase' );
+
+	if ( ! in_array( $value, $allowed, true ) ) {
+		return 'none';
+	}
+
+	return $value;
+}
+
+/**
+ * Sanitize the background control.
+ *
+ * @param array $value input value.
+ *
+ * @return WP_Error | array
+ */
+function neve_sanitize_background( $value ) {
+	if ( ! is_array( $value ) ) {
+		return new WP_Error();
+	}
+
+	if ( ! isset( $value['type'] ) || ! in_array( $value['type'], array( 'image', 'color' ), true ) ) {
+		return new WP_Error();
+	}
+
+	return $value;
+}
+
+/**
+ * Sanitize the button appearance control.
+ *
+ * @param array $value the control value.
+ *
+ * @return array
+ */
+function neve_sanitize_button_appearance( $value ) {
+	if ( is_array( $value ) ) {
+		return $value;
+	}
+
+	return $value;
+}
+
+/**
+ * Sanitize the typography control.
+ *
+ * @param array $value the control value.
+ *
+ * @return array
+ */
+function neve_sanitize_typography_control( $value ) {
+	$keys = [
+		'lineHeight',
+		'letterSpacing',
+		'fontWeight',
+		'fontSize',
+		'textTransform',
+	];
+
+	// Approve Keys.
+	foreach ( $value as $key => $values ) {
+		if ( ! in_array( $key, $keys, true ) ) {
+			unset( $value[ $key ] );
+		}
+	}
+
+	// Font Weight.
+	if ( ! in_array( $value['fontWeight'], [ '100', '200', '300', '400', '500', '600', '700', '800', '900' ], true ) ) {
+		$value['fontWeight'] = '300';
+	}
+	// Text Transform.
+	if ( ! in_array( $value['textTransform'], [ 'none', 'uppercase', 'lowercase', 'capitalize' ], true ) ) {
+		$value['textTransform'] = 'none';
+	}
+
+	// Make sure we deal with arrays.
+	foreach ( [ 'letterSpacing', 'lineHeight', 'fontSize' ] as $value_type ) {
+		if ( ! is_array( $value[ $value_type ] ) ) {
+			$value[ $value_type ] = [];
+		}
+	}
+
+	return $value;
 }

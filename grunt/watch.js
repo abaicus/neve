@@ -1,12 +1,6 @@
 /* jshint node:true */
 // https://github.com/gruntjs/grunt-contrib-watch
 module.exports = {
-	js: {
-		files: [
-			'assets/js/src/**.js',
-		],
-		tasks: [ 'uglify:scripts', 'uglify:unMinified' ]
-	},
 	customizerJs: {
 		files: [
 			'inc/customizer/controls/js/*.js',
@@ -15,7 +9,7 @@ module.exports = {
 		tasks: [ 'uglify:customizerControls', 'uglify:unMinified' ]
 	},
 	sass: {
-		files: [ 'assets/scss/**/*.scss' ],
+		files: [ 'assets/scss/**/*.scss', 'header-footer-grid/assets/scss/**/*.scss' ],
 		tasks: [ 'sass:style', 'cssmin' ]
 	},
 	customizerSass: {

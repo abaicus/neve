@@ -4,8 +4,8 @@ logs
 dist
 artifact
 vendor
-bin
-composer.lock
 **/*.js.map
 **/*.css.map
 **/.DS_Store
+cypress/videos/*
+header-footer-grid/assets/css/style*

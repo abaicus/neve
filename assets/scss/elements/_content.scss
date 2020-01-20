@@ -1,9 +1,30 @@
+.nv-iframe-embed {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.wp-block-cover-image .wp-block-cover__inner-container, .wp-block-cover .wp-block-cover__inner-container {
+  max-width: calc(100% - 70px);
+}
+
 blockquote {
   text-align: center;
   margin: $spacing 0;
+
   p {
-  font-size: 1.1em;
+    font-size: 1.1em;
   }
+
   cite {
     padding-top: $spacing-sm;
     display: block;
@@ -12,6 +33,7 @@ blockquote {
     font-size: .95em;
     text-align: center;
   }
+
   &:after, &:before {
     height: 3px;
     width: $spacing-lg;
@@ -19,12 +41,15 @@ blockquote {
     content: " ";
     display: block;
   }
+
   &:before {
     margin: 0 auto $spacing;
   }
+
   &:after {
     margin: $spacing auto 0;
   }
+
   > * {
     margin-bottom: 0;
   }
@@ -33,19 +58,18 @@ blockquote {
 table {
   width: 100%;
   margin: $spacing-sm 0;
+
   td, th {
     padding: $spacing-xs;
     border-bottom: $muted-border;
   }
-  tbody tr:hover {
-    background-color: #fbfbfb;
-  }
 }
 
-code {
+p code {
   background: #d0effb;
   border-radius: 5px;
   border: $muted-border;
+  padding: 0 3px;
 }
 
 pre {
@@ -66,39 +90,26 @@ pre {
     clear: both;
     display: table;
   }
+
   ul {
     list-style-type: circle;
   }
+
   > ul, > ol {
     margin: $spacing-sm 0;
   }
+
   ul, ol {
     padding-left: $spacing-sm;
+
     li {
-      line-height: 2em;
-      margin-bottom: $spacing-xs;
+      margin-top: $spacing-xs;
     }
   }
 
-  dl:not(.gallery-item) {
-    width: 100%;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-row-gap: $spacing;
-    margin: $spacing-sm 0;
-  }
-
-  dt:not(.gallery-icon) {
-    border-right: $muted-border;
-    padding: 0 $spacing-sm;
-    dfn {
-      font-style: normal;
-      font-weight: 600;
-    }
-  }
-  dd:not(.gallery-caption) {
-    padding: 0 $spacing-sm;
+  dt {
+    font-weight: 600;
+    display: block;
   }
 }
 
@@ -113,6 +124,7 @@ pre {
 }
 
 .aligncenter {
+  display: block;
   text-align: center;
   margin: 0 auto;
 }
@@ -141,8 +153,20 @@ hr {
   width: 100%;
 }
 
+audio {
+  display: flex;
+  height: 50px;
+}
+
 @mixin content--laptop() {
   .neve-main > .container .col {
     max-width: 70%;
+  }
+  .neve-main > .container > .row {
+    flex-wrap: nowrap;
+  }
+
+  .nv-empty-sidebar .neve-main > .container .col {
+    max-width: 100%;
   }
 }

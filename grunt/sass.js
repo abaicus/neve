@@ -1,31 +1,21 @@
-/* jshint node:true */
+// jshint ignore: start
 // https://github.com/gruntjs/grunt-contrib-sass
+
+const sass = require('node-sass');
+
 module.exports = {
 	style: {
 		options: {
-			noCache: true,
-			style: 'expanded',
-			sourcemap: 'auto',
+			implementation: sass,
+			outputStyle: 'expanded',
+			sourceMap: true,
 		},
 		files: [ {
 			'style.css': 'assets/scss/style.scss',
+			'assets/css/customizer-preview.css': 'assets/scss/customizer-preview.scss',
 			'assets/css/woocommerce.css': 'assets/scss/woocommerce.scss',
+			'assets/css/lifter.css': 'assets/scss/lifter.scss',
 			'assets/css/gutenberg-editor-style.css': 'assets/scss/gutenberg-editor-style.scss',
-		} ]
-	},
-
-	min: {
-		options: {
-			noCache: true,
-			style: 'compressed',
-			sourcemap: 'none',
-		},
-		files: [ {
-			'style.min.css': 'assets/scss/style.scss',
-			'style-rtl.min.css': 'style-rtl.css',
-			'assets/css/woocommerce.min.css': 'assets/scss/woocommerce.scss',
-			'assets/css/woocommerce-rtl.min.css': 'assets/css/woocommerce-rtl.css',
-			'assets/css/gutenberg-editor-style.min.css': 'assets/scss/gutenberg-editor-style.scss',
 		} ]
 	},
 };

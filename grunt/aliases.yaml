@@ -1,43 +1,44 @@
 buildScripts:
-- 'sass:style'
+- 'sass'
 - 'concat:customizerStyle'
-- 'sass:min'
 - 'uglify:scripts'
 - 'uglify:customizerControls'
-#- 'postcss'
 - 'rtlcss'
 - 'cssmin'
 
 check:
 - 'sass:style'
 - 'concat:customizerStyle'
-- 'sass:min'
 - 'uglify:scripts'
 - 'uglify:customizerControls'
 #- 'postcss'
 - 'rtlcss'
 - 'cssmin'
 - 'makepot'
-- 'phpcbf'
+- 'shell:phpcbf'
 - 'newer:addtextdomain:main'
 - 'check:css'
 - 'travis'
 
-deploy:
+travis:
+  descriptions: "Routine testing in CI"
+  tasks: [
+    "shell:phpcs",
+    "jshint",
+    "check:i18n"
+  ]
+
+dist:
 - 'addtextdomain:composerDeps'
 - 'clean:wporg'
-- 'cachebuster'
 - 'mkdir:dist'
-- 'mkdir:artifact'
-- 'copy:pro'
+- 'cachebuster:full'
 - 'copy:full'
-- 'compress:full'
-#  - 'deploy_lite'
 
-#deploy_lite:
-#  - 'compress:full'
-#  - 'copy:lite'
-#  - 'compress:lite'
+deploy:
+- 'dist'
+- 'mkdir:artifact'
+- 'compress:full'
 
 
 # Version:

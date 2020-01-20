@@ -1,9 +1,10 @@
 # Neve #
 **Contributors:** [themeisle](https://profiles.wordpress.org/themeisle)  
-**Tags:** blog, custom-logo, e-commerce, rtl-language-support, post-formats, grid-layout, one-column, two-columns, custom-background, custom-colors, custom-header, custom-menu, featured-image-header, featured-images, flexible-header, full-width-template, sticky-post, theme-options, threaded-comments, translation-ready  
+**Tags:** blog, custom-logo, e-commerce, rtl-language-support, post-formats, grid-layout, one-column, two-columns, custom-background, custom-colors, custom-header, custom-menu, featured-image-header, featured-images, flexible-header, full-width-template, sticky-post, theme-options, threaded-comments, translation-ready, accessibility-ready, wide-blocks, block-styles, footer-widgets, portfolio, left-sidebar, right-sidebar  
 **Requires at least:** 4.0  
-**Tested up to:** 5.0  
+**Tested up to:** 5.3  
 **Stable tag:** 1.0.23  
+**Requires PHP:** 5.4.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -17,6 +18,377 @@ Neve WordPress theme, Copyright 2018 Themeisle
 Neve is distributed under the terms of the GNU GPLv2 or later
 
 ## Changelog ##
+### 2.5.4 - 2019-12-19  ###
+
+* [Feat] New styling options for buttons in the header builder
+* [Feat] New dynamic tags for the header and footer builder
+* [Fix] External fonts not loading in editor
+* [Fix] Removed unnecessary post metadata saved in the database
+* [Fix] Improved primary menu closing animation on mobile
+* [Fix] Button block preview in the editor
+* [Fix] Compatibility with the latest update of Gutenberg
+* [Fix] Improved padding and margin components layout
+* [Fix] Button border-radius control default value not allowing a zero value
+* [Fix] Made default layout full width when the sidebar is empty
+
+
+### 2.5.3 - 2019-12-05  ###
+
+* [Feat] New option to allow both logo and site and tagline in different layouts
+* [Feat] New dedicated typography controls for the Primary, Secondary and Footer menus, HTML, Copyright, Cart and Search icons components on the header builder
+* [Fix] Embeds compatibility issues with Jetpack and the Embed Plus for YouTube – Gallery, [Fix] Channel, Playlist, Live Stream plugin
+* [Fix] Excerpt compatibility with the Seriously Simple Podcasting plugin
+* [Fix] Removed list styling from the All Products block in the WooCommerce Block plugin
+* [Fix] Content width live preview on mobile devices
+* [Fix] Replaced the Last menu item option with dedicated components for new users
+* [Fix] Removed Neve Visual Integration causing issues in the editor
+* [Fix] Copyright component striping spaces before and after links
+* [Fix] Replaced buttons old padding control with a new version
+* [Fix] Padding for the Menu Icon component
+* [Fix] Lists spacing alignment
+* [Fix] Updated Google Fonts list
+* [Fix] Getting post meta value for single product page meta-box
+
+
+### 2.5.2 - 2019-11-19  ###
+
+* [Feat] Improved mobile header/footer builder UX
+* [Feat] New styling controls for the Menu Icon component
+* [Feat] New Filled and Outline style options for buttons
+* [Fix] Uploading background images in the header/footer builder
+* [Fix] Content alignment when Gutenberg is activated
+* [Fix] Multiple embeds not visible on the single post page
+* [Fix] Better alignment for small icon components of the header/footer builder
+* [Fix] Excerpts now inherit text color
+* [Fix] Single product titles now inherit H1 typography options
+* [Fix] Typography units changes did not trigger control refresh
+* [Fix] Enlarged the narrow content in the editor
+* [Fix] Removed hover effect on table rows overriding block colors
+* [Fix] Overriding header/footer builder templates using child themes
+
+
+### 2.5.1 - 2019-11-04  ###
+
+* [Fix] Correct migration of body font size to new version
+
+
+### 2.5.0 - 2019-11-04  ###
+
+* [Feat] Improve header/footer builder UX
+* [Feat] Increased header/footer builder row height to 700px
+* [Feat] Improve typography controls, adds Text Transform, Font Weight, Letter Spacing controls for headings.
+* [Feat] Shadow option for the blog thumbnails
+* [Fix] Removed extra padding-top on embeds
+* [Fix] Embeds not visible on the blog page
+* [Fix] Small compatibility issues with WP 5.3
+* [Fix] Cover block text color not updating
+* [Fix] Reply comments mechanism when Yoast is installed
+* [Fix] Scroll on mobile and tablet and wireframe view in the Divi editor
+* [Fix] Content width on full-width container
+* [Fix] Headings blocks errors with Gutenberg 6.8.0
+* New Beaver Builder Starter Sites
+* New Brizy Starter Sites
+
+
+
+### 2.4.3 - 2019-10-10  ###
+
+* [Feat] Compatibility with the Header Footer for Beaver Builder plugin
+* [Feat] Integrate Cypress E2E testing
+* [Fix] Header button component padding affected by general buttons options
+* [Fix] Set newly created pages to Full width
+* [Fix] Embeds in the Classic Editor
+* [Fix] Compatibility with the Smush Lazy Loading
+
+* [Fix] Alignment options for the Secondary and Footer menus
+* [Fix] Style ul/li on WooCommerce single product short descriptions
+* [Fix] Add support for responsive embeds
+* New Beaver Builder Starter Sites: Freelancer & Life Coach
+
+
+### 2.4.1 - 2019-09-13  ###
+
+* [Feat] New background image options for the header and the footer
+* [Feat] Allow custom shortcodes in the HTML components of the header
+* [Fix] Improve the cart menu icon, remove empty products message on the dropdown menu
+* [Fix] Issue with duplicating thumbnails when using SG Optimizer Lazy Load option
+* [Fix] On-print behavior, causing duplicating of the header elements
+* [Fix] Page scroll while menu sidebar is open
+* [Fix] Search icon alignment options
+* [Fix] Issue with hiding the thumbnail on single post pages
+* [Fix] Improve header customization UX
+* [Fix] Validation errors in AMP
+* New Starter Sites
+* Tattoo - https://themeisle.com/demo/?theme=Tattoo
+* Life Coach - https://themeisle.com/demo/?theme=Life%20Coach
+* Creative Portfolio - https://themeisle.com/demo/?theme=Creative%20Portfolio
+* Redesigned Starter Sites
+* Energy Panels - https://themeisle.com/demo/?theme=Energy%20Panels
+* Lawyers - https://themeisle.com/demo/?theme=Lawyers
+* Freelancer - https://themeisle.com/demo/?theme=Freelancer
+* New Beaver Builder Starter Sites
+
+
+### 2.4.0 - 2019-08-14  ###
+
+* Fix issue with standard fonts not loading
+* Fix compatibility with Async loading of javascript files
+* Fix issue with page title on pages built with Elementor
+* Adds individual line-height option
+* Adds breadcrumbs compatibility with Yoast, Seopress, Rankmath and NavXT
+* Performance improvements to the codebase, optimize CSS/JS file loading
+* Adds 5 more starter sites
+
+
+
+### 2.3.22 - 2019-08-02  ###
+
+* Speed updates for the Starter Sites Library
+
+
+### 2.3.21 - 2019-07-30  ###
+
+* [Feat] Color options for each header and footer rows
+* [Feat] New Starter Sites in the library: Architecture, Fitness, Vacation Rental, and Music Band
+* [Fix] Posts overlapping when the Masonry layout was enabled on a slow Internet connection
+* [Fix] Importing options from any child theme of Zelle
+* [Fix] Updated the Google Fonts Library
+* [Fix] Improved layout of the My Account page
+* [Fix] Updated components default width in the Header builder to better accommodate each one
+* [Fix] Issue with multiple Shipping methods not aligning properly on the Cart page
+* [Fix] Sale tag that was cut off in the Exclusive Product section
+* [Fix] Redone the spacing control option
+* [Fix] Removed Neve's custom integration with Gutenberg by default
+* [Fix] Vertically align widgets in the footer area
+* [Fix] Slightly larger default height for buttons and inputs for a better layout
+* [Perf] Moved customizer CSS code to inline code for better speed results
+
+
+### 2.3.20 - 2019-07-15  ###
+
+* Updated composer
+* Fixed z-index issue with the About page
+
+
+### 2.3.19 - 2019-07-15  ###
+
+* Release
+
+
+### 2.3.18 - 2019-07-15  ###
+
+* Multiple speed optimizations: minified scripts, improved enqueued scripts logic, proper size for the gravatar images
+* Removed author gravatar image by default and created a new option for it
+* Updates for current Starter Sites library
+* New Brizy Starter Sites library
+
+
+### 2.3.17 - 2019-07-08  ###
+
+* Fixed theme check warning
+
+
+### 2.3.16 - 2019-07-08  ###
+
+* Fixed divider layout in the custom Mega Menu integration
+* Fixed onboarding popup for child themes
+* Fixed lists styling in the comments area
+* Fixed warnings from order control
+
+
+### 2.3.15 - 2019-06-28  ###
+
+* Fixed primary menu on mobile devices not closing for anchor links
+* Fixed menu items description layout in the primary menu
+* Auto-focus in the search input
+
+
+### 2.3.14 - 2019-06-25  ###
+
+* Fixed compatibility issues with the Max Mega Menu plugin
+* Fixed compatibility with Neve's custom Mega Menu integration
+* Fixed extra padding for the gallery block
+* Fixed author bio's image size and alignment
+* Fixed accessibility and RTL issues with the header builder
+* Fixed lists styling in the comments area
+* Compatibility for Neve Pro's Typekit module
+
+
+### 2.3.12 - 2019-06-17  ###
+
+* Added missing strings in the translation file wpml-config.xml file
+* Updated the min PHP version in the readme file
+* Upsells for Neve Pro
+
+
+### 2.3.11 - 2019-06-12  ###
+
+* Redone the layout for the About page
+* Added fallbacks for JS features in AMP mode
+* Added compatibility between the LifterLMS plugin and the buttons options
+* Improved the WooCommerce My Account page layout on mobile devices
+
+
+### 2.3.10 - 2019-06-04  ###
+
+* New color, padding and border radius options for Primary and Secondary Buttons
+* Fixed issue with duplicated posts on the blog page
+* Fixed onboarding sites options throwing warnings after the last menu item migration
+* Updated the screenshot
+
+
+### 2.3.9 - 2019-05-27  ###
+
+* Fixed issues with redirects to Otter and WPForms dashboards in the onboarding process
+
+
+### 2.3.8 - 2019-05-27  ###
+
+* Redone the Last item in menu control to accommodate more items
+* Accessibility fixes
+* Improved footer widgets logic to better accommodate the footer builder
+* Exclusive Products section layout improvements
+* WooCommerce buttons enhancements
+* New hooks added
+
+
+### 2.3.7 - 2019-05-07  ###
+
+* New Margin and Padding controls for each header builder component
+* Reorganized layout for the header/footer builder using tabs
+* Option for the mobile menu to slide from the left side or dropdown toggle
+* Basic compatibility with LifterLMS plugin
+* New Exclusive Products section on single product pages
+* Added animations to the main Gutenberg starter site
+* Updates for the Doctors, Restaurant, Vet Center starter sites
+* Updates for the latest version of Otter Blocks
+
+
+### 2.3.6 - 2019-04-22  ###
+
+* Fixed primary menu in AMP mode
+* Notice for Otter Blocks for WordPress 5 users
+* Fixed vertical alignment in IE
+* Remove title appearing in the navigation cart in the latest update of WooCommerce
+* Updated the component alignment control in the header/footer builder
+
+
+### 2.3.5 - 2019-04-15  ###
+
+* Fixed header HTML component stripping HTML code
+* Fixed Jetpack's comment form layout issue
+* Fixed dropdown menu not working in Microsoft Edge
+* Fixed main content shifted to the right in IE11
+* Fixed migration from Zelle
+* Fixed audio block not displaying in Chrome
+* Fixed compatibility with Elementor Pro Theme Locations API
+* Added new wp_body_open() function for WP 5.2
+* Replaced neve icons with SVGs for a better loading time
+* New Shop starter site
+
+
+### 2.3.4 - 2019-04-05  ###
+
+* Removed unused strings
+
+
+### 2.3.3 - 2019-04-05  ###
+
+* Fixed AMP issues with the header footer builder
+* Smaller header spacing on mobile devices
+* Fixed toggle button layout on WooCommerce pages
+
+
+### 2.3.2 - 2019-04-05  ###
+
+* Header footer builder fixed sanitization
+
+
+### 2.3.1 - 2019-04-05  ###
+
+* Fixed missing sanitization functions
+* Fixed Gutenberg integration with the typography options
+
+
+### 2.3.0 - 2019-04-04  ###
+
+* NEW Header/Footer builder
+* Compatibility with the Header, Footer & Blocks for Elementor plugin
+* New option to allow disabling of the custom Gutenberg integration
+* Updated the tag list with the newly added tags
+
+
+### 2.2.0 - 2019-03-18  ###
+
+* New Original starter site created in the new Gutenberg editor for WordPress 5 users
+* Improved onboarding page layout
+* Compatibility with the Neve Hooks plugin
+* WPML compatibility
+* Update Contact us with the correct link
+
+
+### 2.1.0 - 2019-03-07  ###
+
+* Two newly added Elementor Starter Sites
+* Small updates to the Starter Sites library
+* Improved WooCommerce page layouts
+* Improved onboarding page layout
+* Fixed issue with .aligncenter class not working properly
+* Fixed issue with sidebar not aligned properly on Safari 10
+* Fixed SSL issue for generated stylesheets
+
+
+### 2.0.0 - 2019-02-26  ###
+
+* Refactor the code to allow child themes to override the views folder - https://docs.themeisle.com/article/985-how-to-create-a-child-theme-for-neve
+* Updated the onboarding notice to provide more information
+* Fixed issue with the image source for the Video block for Otter
+* Updated starter sites to use Anchor widgets
+
+
+### 1.1.4 - 2019-02-08  ###
+
+* Fixed alignment issues with the Gallery widget
+
+
+### 1.1.3 - 2019-02-07  ###
+
+* Fixed list styling in Elementor
+
+
+### 1.1.2 - 2019-02-07  ###
+
+* New Gutenberg Blocks added for Otter
+* Fixed lists styling
+* Fixed issue with Gutenberg Blocks images not visible in an online environment
+
+
+### 1.1.1 - 2019-02-04  ###
+
+* Fixed issue with content missing on the single post page
+* Fixed issue with the Footer Gutenberg block for Otter
+* Improved the Neve Energy Panel starter site
+
+
+### 1.1.0 - 2019-01-31  ###
+
+* NEW Neve Specific Gutenberg blocks for Otter Blocks
+* NEW Posts navigation control
+* Display category description of categories archive pages
+* Fixed issue with the Neve Restaurant starter site not importing in some cases
+* Fixed issue with the starter sites not importing when Jetpack is installed
+* Fixed issue with scrolling not working on mobile devices for anchored links
+* Fixed issue with lists not displaying properly in Elementor
+* Fixed fatal error for lower PHP versions
+
+
+### 1.0.29 - 2019-01-21  ###
+
+* Improved the onboarding process
+* Fixed issue with the read more button not appearing for the articles using the read more tag
+* Recommend the WeGlot plugin
+
+
 ### 1.0.28 - 2019-01-15  ###
 
 * Layout updates for the starter sites
@@ -175,15 +547,15 @@ Neve is distributed under the terms of the GNU GPLv2 or later
 * Release Date - 2018-09-24*
 * Add proper Elementor Header and Footer support
 * Fixed warning caused by forgotten "var_dump" in page / post metabox handler
- 
+
 ### v1.0.2 ###
 * Release Date - 2018-09-07*
 * Demo data for Neve 2018 template
- 
+
 ### 1.0.1 ###
 * Release Date - 2018-09-07*
 * Updated description and screenshot
- 
+
 ### 1.0.0 ###
 * Release Date - 2018-09-06*
 * Lowercase file names.
@@ -192,108 +564,354 @@ Neve is distributed under the terms of the GNU GPLv2 or later
 ## Resources ##
 * Neve Icons based on Font Awesome Icons licensed under CC BY 4.0 License (https://creativecommons.org/licenses/by/4.0/).
 
-Images used in the screenshot and in the demos:
 All  images are licensed under CC0.
 
-* Neve Main: testimonial-1.jpg, CC0, https://mystock.themeisle.com/photo/girl-in-the-forest/
-* Neve Main: team-4-1.jpg, CC0, https://mystock.themeisle.com/photo/girl/
-* Neve Main: team-3-1.jpg, CC0, https://mystock.themeisle.com/photo/thinking-time/
-* Neve Main: team-2-1.jpg, CC0, https://mystock.themeisle.com/photo/winter-hat/
-* Neve Main: team-1.jpg, CC0, https://mystock.themeisle.com/photo/sun-hat/
-* Neve Main: 3-3.jpg (also used in screenshot), CC0, https://pixabay.com/en/metro-subway-train-station-1209556/
-* Neve Main: blog3.jpg, CC0, https://mystock.themeisle.com/photo/river-bridge/
-* Neve Main: 11.jpg, CC0, https://mystock.themeisle.com/photo/yoga-2/
-* Neve Main: 9.jpg, CC0, https://mystock.themeisle.com/photo/alley-3/
-* Neve Main: 8.jpg, CC0, https://mystock.themeisle.com/photo/new-york-city-scape/
-* Neve Main: 6.jpg, CC0, https://mystock.themeisle.com/photo/devices/
-* Neve Main: 5.jpg, CC0, https://mystock.themeisle.com/photo/high-seats/
-* Neve Main: 4.jpg, CC0, https://mystock.themeisle.com/photo/ipad/
-* Neve Main: 1.jpg (also used in screenshot), CC0, https://mystock.themeisle.com/photo/path/
-* Neve Main: work-4.jpg, CC0 https://mystock.themeisle.com/photo/stockholm-street/
-* Neve Main: video-bg.jpg, CC0, https://mystock.themeisle.com/photo/cloudy-sunset/
-* Neve Main: winter-forest.jpg, CC0, https://mystock.themeisle.com/photo/winter-forest/
-* Neve Vet Center: neve-vet-center-big-title1.jpg, CC0, https://mystock.themeisle.com/photo/squirrel-2/
-* Neve Vet Center: neve-vet-center-testify.jpg, CC0, https://mystock.themeisle.com/photo/beagle-puppy/
-* Neve Vet Center: neve-vet-center-testify-cat.jpg, CC0, https://mystock.themeisle.com/photo/cat-2/
-* Neve Energy Panels: smile-1726471_1920.jpg, CC0, https://pixabay.com/en/smile-profile-face-male-portrait-1726471/
-* Neve Energy Panels: energy-2181904_1920.jpg, CC0, https://pixabay.com/en/energy-wind-energy-wind-power-2181904/
-* Neve Energy Panels: windrader-1048981_1920.jpg, CC0, https://pixabay.com/en/windr%C3%A4der-wind-power-wind-park-fog-1048981/
-* Neve Energy Panels: window-cleaner-104890.jpg, CC0, https://pixabay.com/en/window-cleaner-window-cleaning-104890/
-* Neve Energy Panels: computer-3365366_1920.jpg, CC0, https://pixabay.com/en/computer-adult-laptop-office-woman-3365366/
-* Neve Energy Panels: office-1574717_1920.jpg, CC0, https://pixabay.com/en/office-pen-calculator-computation-1574717/
-* Neve Energy Panels: office-space-1744803.jpg, CC0, https://pixabay.com/en/office-space-office-sunny-coworking-1744803/
-* Neve Energy Panels: computer-2157100.jpg, CC0, https://pixabay.com/en/computer-programmer-it-business-2157100/
-* Neve Energy Panels: model-2911332_1920.jpg, CC0, https://pixabay.com/en/model-businessman-corporate-2911332/
-* Neve Energy Panels: adult-1868750.jpg, CC0, https://pixabay.com/en/adult-bald-beard-corporate-1868750/
-* Neve Energy Panels: business-437020_1920.jpg, CC0, https://pixabay.com/en/business-notebook-business-people-437020/
-* Neve Energy Panels: cold-1284411_1920.jpg, CC0, https://pixabay.com/en/cold-snow-nature-fashion-hands-1284411/
-* Neve Energy Panels: abstract-aluminum-210158.jpg, CC0, https://pixabay.com/en/basel-switzerland-tram-architecture-1722831/
-* Neve Energy Panels: alternative-alternative-energy-clouds-433308.jpg, CC0, https://pixabay.com/en/energy-renewable-energy-solar-energy-2302001/
-* Neve Energy Panels: alternative-alternative-energy-collector-159243.jpg, CC0, https://pixabay.com/en/solar-solar-cells-photovoltaic-1476224/
-* Neve Energy Panels: close-up-energy-low-angle-shot-68674.jpg, CC0, https://pixabay.com/en/windmill-wind-wind-turbine-electric-62257/
-* Neve Energy Panels: alternative-energy-environment-power-356060.jpg, CC0, https://pixabay.com/en/environmental-technology-current-1837636/
-* Neve Energy Panels: afterglow-alternative-energy-clouds-532192.jpg, CC0, https://pixabay.com/en/sunset-sunrise-sun-water-afterglow-2469106/
-* Neve Energy Panels: alternative-alternative-energy-collector-159243.jpg, CC0, https://pixabay.com/en/solar-solar-cells-photovoltaic-1476224/
-* Neve Energy Panels: adult-beautiful-casual-372042.jpg, CC0, https://pixabay.com/en/emotions-girl-hair-model-beauty-2166221/
-* Neve Energy Panels: adult-agreement-beard-573565.jpg, CC0, https://pixabay.com/en/business-deal-smile-cheerful-2703167/
-* Neve Energy Panels: adult-chill-computer-450271.jpg, CC0, https://pixabay.com/en/adult-break-business-caucasian-2449725/
-* Neve Energy Panels: alternative-alternative-energy-clean-356049.jpg, CC0, https://pixabay.com/en/photovoltaic-photovoltaic-system-2138994/
-* Neve Energy Panels: alternative-alternative-energy-blades-691458.jpg, CC0, http://snapwiresnaps.tumblr.com/post/167509411781/logan-edmark-free-under-cc0-10-download
-* Neve Energy Panels: alternative-alternative-energy-clean-159397.jpg, CC0, https://pixabay.com/en/solar-panel-array-power-sun-1591350/
-* Neve Energy Panels: alternative-alternative-energy-blue-411592.jpg (also used in screenshot), CC0, https://pixabay.com/en/solar-energy-solar-system-2157212/
-* Neve Lawyers: men-employees-suit-work-greeting-1979261.jpg (also used in screenshot), CC0, https://pixabay.com/en/men-employees-suit-work-greeting-1979261/
-* Neve Lawyers: lady-justice-2388500.jpg, CC0, https://pixabay.com/en/lady-justice-legal-law-justice-2388500/
-* Neve Lawyers: business-woman-2697954.jpg, CC0, https://pixabay.com/en/business-woman-professional-suit-2697954/
-* Neve Lawyers: business-woman-2756210.jpg, CC0, https://pixabay.com/en/business-woman-woman-secretary-2756210/
-* Neve Lawyers: women-2748752.jpg, CC0, https://pixabay.com/en/women-business-attractive-dynamic-2748752/
-* Neve Lawyers: justice-2060093.jpg, CC0, https://pixabay.com/en/justice-statue-lady-justice-2060093/
-* Neve Lawyers: writer-1421099.jpg, CC0, https://pixabay.com/en/writer-typewriter-author-blogging-1421099/
-* Neve Lawyers: library-869061.jpg, CC0, https://pixabay.com/en/library-books-education-literature-869061/
-* Neve Lawyers: chicago-1870010.jpg, CC0, https://pixabay.com/en/chicago-city-night-usa-1870010/
-* Neve Lawyers: office-2820890.jpg, CC0, https://pixabay.com/en/office-attorney-reading-read-laws-2820890/
-* Neve Lawyers: men-2608581.jpg, CC0, https://pixabay.com/en/men-women-people-group-walk-busy-2608581/
-* Neve Lawyers: police-850055.jpg, CC0, https://pixabay.com/en/police-crime-scene-blue-light-850054/
-* Neve Doctors: medical-3447369 (also used in screenshot), CC0,  https://pixabay.com/en/medical-care-health-healthcare-3447369/
-* Neve Doctors: nurse-2019420, CC0, https://pixabay.com/en/nurse-medicine-doctor-hospital-2019420/
-* Neve Doctors: dr-2157993, CC0, https://pixabay.com/en/dr-doctor-women-professional-2157993/
-* Neve Doctors: dentist-1191671, CC0, https://pixabay.com/en/dentist-doctor-1191671/
-* Neve Doctors: architecture-931283, CC0, https://pixabay.com/en/architecture-buildings-hospital-931283/
-* Neve Doctors: pills-3673645, CC0, https://pixabay.com/en/pills-medicine-medical-health-drug-3673645/
-* Neve Doctors: bach-flowers-1472825, CC0, https://pixabay.com/en/bach-flowers-bach-remedies-1472825/
-* Neve Doctors: feng-shui-1927590, CC0, https://pixabay.com/en/feng-shui-zen-stones-texture-1927590/
-* Neve Doctors: sunburn-2117350, CC0, https://pixabay.com/en/sunburn-skin-red-flushed-2117350/
-* Neve Doctors: teeth-1652976, CC0, https://pixabay.com/en/teeth-dentist-dental-mouth-tooth-1652976/
-* Neve Doctors: adult-1868750, CC0, https://pixabay.com/en/adult-bald-beard-corporate-1868750/
-* Neve Restaurant: restaurant-237060 (also used in screenshot), CC0, https://pixabay.com/en/restaurant-dinner-tables-yowani-237060/
-* Neve Restaurant: restaurant-691397, CC0, https://pixabay.com/en/restaurant-food-lunch-dinner-691397/
-* Neve Restaurant: breakfast-801827, CC0, https://pixabay.com/en/breakfast-buffet-food-restaurant-801827/
-* Neve Restaurant: cuisine-2248567, CC0, https://pixabay.com/en/cuisine-food-italian-antipasti-2248567/
-* Neve Restaurant: buffet-315691, CC0, https://pixabay.com/en/buffet-indian-food-spices-lunch-315691/
-* Neve Restaurant: restaurant-2602736, CC0, https://pixabay.com/en/restaurant-people-men-women-eating-2602736/
-* Neve Restaurant: restaurant-358238, CC0, https://pixabay.com/en/restaurant-glasses-drink-lichtspiel-358238/
-* Neve Restaurant: adult-2242162, CC0, https://pixabay.com/en/adult-beautiful-bride-card-2242162/
-* Neve Restaurant: restaurant-449952, CC0, https://pixabay.com/en/restaurant-wine-glasses-served-449952/
-* Neve Restaurant: food-263882, CC0, https://pixabay.com/en/food-soup-spinach-soup-bread-263881/
-* Neve Restaurant: tomatoes-1822185, CC0, https://pixabay.com/en/tomatoes-soup-vegetables-healthy-1822185/
-* Neve Restaurant: eat-2122072, CC0, https://pixabay.com/en/eat-onion-food-healthy-vegetables-2122072/
-* Neve Restaurant: cobb-salad-2736125, CC0, https://pixabay.com/en/cobb-salad-chicken-cobb-meal-2736125/
-* Neve Restaurant: waldorf-salad-3212344, CC0, https://pixabay.com/en/waldorf-salad-celery-apple-3212344/
-* Neve Restaurant: tomatoes-1603611, CC0, https://pixabay.com/en/tomatoes-tomato-quiche-red-yellow-1603611/
-* Neve Restaurant: chicken-3763827, CC0, https://pixabay.com/en/chicken-barbecue-grill-stuff-eat-3763827/
-* Neve Restaurant: spare-ribs-2225208, CC0, https://pixabay.com/en/spare-ribs-grill-bbq-sauce-2225208/
-* Neve Restaurant: fried-chicken-250863, CC0, https://pixabay.com/en/fried-chicken-chicken-fried-crunchy-250863/
-* Neve Restaurant: tuna-2418460, CC0, https://pixabay.com/en/tuna-grilled-bbq-food-healthy-2418460/
-* Neve Restaurant: grilled-3334579, CC0, https://pixabay.com/en/grilled-meat-grill-grilling-peace-3334579/
-* Neve Restaurant: thick-pig-roast-filet-izod-black-pepper-2336138, CC0, https://pixabay.com/en/thick-pig-roast-filet-izod-black-pepper%2C-2336138/
-* Neve Restaurant: cake-1850011, CC0, https://pixabay.com/en/cake-chocolate-chocolate-cake-1850011/
-* Neve Restaurant: cake-2459954, CC0, https://pixabay.com/en/cake-strawberries-2459954/
-* Neve Restaurant: sweet-1392724, CC0, https://pixabay.com/en/sweet-treat-hand-made-sweets-1392724/
-* Neve Restaurant: dessert-1373821, CC0, https://pixabay.com/en/dessert-cooking-sweet-dishes-sweets-1373821/
-* Neve Restaurant: tiramisu-2897900, CC0, https://pixabay.com/en/tiramisu-dessert-tiramisu-2897900/
-* Neve Restaurant: cream-puff-1694337, CC0, https://pixabay.com/en/cream-puff-pastries-bake-1694337/
-* Neve Restaurant: dinner-table-444434, CC0, https://pixabay.com/en/dinner-table-restaurant-dining-444434/
-* Neve Charity: children-63175, CC0, https://pixabay.com/en/children-afghanistan-afghani-girl-63175/
-* Neve Charity: africa-2179608, CC0, https://pixabay.com/en/africa-child-children-people-young-2179608/
-* Neve Charity: potion-1860939, CC0, https://pixabay.com/en/potion-poverty-misery-sadness-sdf-1860939/
-* Neve Charity: children-734891, CC0, https://pixabay.com/en/children-burundi-bottle-water-734891/
-* Neve Charity: trouser-pockets-1439412, CC0, https://pixabay.com/en/trouser-pockets-empty-jeans-1439412/
+Screenshot resources:
+
+* http://mystock.themeisle.com/photo/statue-2/
+* https://mystock.themeisle.com/photo/path/
+
+Starter Sites screenshots resources:
+
+- Original
+* http://mystock.themeisle.com/photo/statue-2/
+* https://mystock.themeisle.com/photo/path/
+
+- Restaurant
+* https://stocksnap.io/photo/3IRQDGCL7J
+* https://stocksnap.io/photo/ZPMWWMHBDE
+* https://stocksnap.io/photo/2HEQC6X2DF
+
+- Charity
+* https://stocksnap.io/photo/AEENLCARXY
+
+- Vet Center
+* https://mystock.themeisle.com/photo/street-dog-sitting-on-a-beach/
+* https://mystock.themeisle.com/photo/dog-4/
+
+- Doctors
+* https://stocksnap.io/photo/GSBJXWRSDV
+
+- Energy Panels
+* http://mystock.themeisle.com/photo/sunny-rome/
+* http://mystock.themeisle.com/photo/tour-eiffel/
+
+- Lawyers
+* http://mystock.themeisle.com/photo/architecture-3/
+* http://mystock.themeisle.com/photo/architecture-2/
+
+- Freelancer
+* http://mystock.themeisle.com/photo/programming-laptop/
+* http://mystock.themeisle.com/photo/code-in-wp/
+
+- Shop
+* https://stocksnap.io/photo/SS2GVMJTWH
+* https://stocksnap.io/photo/KQECHSBAOC
+* https://stocksnap.io/photo/1CXI0CSPE5
+* https://stocksnap.io/photo/JBCWCLO4JI
+* https://stocksnap.io/photo/AEENLCARXY
+
+- Travel Agency
+* https://mystock.themeisle.com/photo/amsterdam/
+
+- Coffee Shop
+* https://stocksnap.io/photo/HOHJK6B7TD
+* https://stocksnap.io/photo/DTKOOFPC06
+
+- Constructions
+* https://stocksnap.io/photo/T78VYSKHFS
+* https://stocksnap.io/photo/ZWTCO4R3G6
+* https://stocksnap.io/photo/6EAB6C3900
+* https://stocksnap.io/photo/BZ4FJO6KZE
+
+- Showcase
+* http://mystock.themeisle.com/photo/mountain/
+* http://mystock.themeisle.com/photo/mountain-at-sunset/
+* http://mystock.themeisle.com/photo/forest-landscape/
+
+- Business Consulting
+* http://mystock.themeisle.com/photo/photographer-2/
+* http://mystock.themeisle.com/photo/cameras/
+
+- Architecture
+* http://mystock.themeisle.com/photo/wind/
+* http://mystock.themeisle.com/photo/architectural-ceiling/
+* http://mystock.themeisle.com/photo/glass-building/
+* http://mystock.themeisle.com/photo/city-view/
+* http://mystock.themeisle.com/photo/trump-tower/
+* http://mystock.themeisle.com/photo/white-building/
+
+- Fashion
+* https://stocksnap.io/photo/K00RNBNJGC
+* https://stocksnap.io/photo/TFK0XBHMRE
+* https://stocksnap.io/photo/BRDLQ22VO4
+* https://stocksnap.io/photo/HZBJUNAK7H
+* https://stocksnap.io/photo/Y7WNWJC6NA
+
+- Fitness
+* https://stocksnap.io/photo/M5791YB6J9
+* https://stocksnap.io/photo/SRWV8BAHE6
+
+- Vacation Rental
+* http://mystock.themeisle.com/photo/pool/
+
+- Music Band
+* https://stocksnap.io/photo/G22LER7CJQ
+* https://stocksnap.io/photo/E9E65D3D04
+* https://stocksnap.io/photo/V2TT0P34KE
+* https://stocksnap.io/photo/BG80NXTTHY
+* https://stocksnap.io/photo/NV1FLKIE9U
+* https://stocksnap.io/photo/IUFVZUDPO5
+
+- Wedding
+* https://stocksnap.io/photo/3RI84R6CYH
+* https://stocksnap.io/photo/GEVAEIZQH1
+* https://stocksnap.io/photo/UXZ782X55D
+
+- TheMotion
+* http://mystock.themeisle.com/photo/code-in-wp/
+* http://mystock.themeisle.com/photo/empty-beach-2/
+* http://mystock.themeisle.com/photo/traffic-sign/
+* http://mystock.themeisle.com/photo/android/
+
+- Life Coach
+* http://mystock.themeisle.com/photo/city-park-night/
+* http://mystock.themeisle.com/photo/temple-2/
+
+- Tattoo
+* http://mystock.themeisle.com/photo/unconventional-store-with-unicorn-in-the-window/
+* http://mystock.themeisle.com/photo/street-at-night/
+
+- Job Listing
+* http://mystock.themeisle.com/photo/registration/
+* http://mystock.themeisle.com/photo/stockholm-street/
+
+- Barber Shop
+* https://stocksnap.io/photo/R9YRHH2JQY
+* http://mystock.themeisle.com/photo/fancy-restaurant/
+
+- Personal Trainer
+* http://mystock.themeisle.com/photo/street-vendor-selling-fruits-on-his-fruit-cart/
+* http://mystock.themeisle.com/photo/yoga-2/
+* http://mystock.themeisle.com/photo/mac-and-cheese-pizza/
+* http://mystock.themeisle.com/photo/hotel-with-terrace-on-the-sea/
+* http://mystock.themeisle.com/photo/indian-restaurant-dishes/
+
+- Creative Portfolio
+* http://mystock.themeisle.com/photo/rocking-chair-on-a-blue-carpet/
+* http://mystock.themeisle.com/photo/vintage-framed-photo-of-desserts/
+* http://mystock.themeisle.com/photo/bathtub-in-the-center-of-the-room/
+* http://mystock.themeisle.com/photo/registration/
+* http://mystock.themeisle.com/photo/big-ben/
+* http://mystock.themeisle.com/photo/glass-building/
+
+- Real Estate
+* http://mystock.themeisle.com/photo/city/
+* http://mystock.themeisle.com/photo/glass-building-2/
+
+- Events
+* http://mystock.themeisle.com/photo/young-boy-attending-a-concert/
+* http://mystock.themeisle.com/photo/performing-artist-with-cool-projections-behind/
+* http://mystock.themeisle.com/photo/drummer-plays-drums-kit/
+* http://mystock.themeisle.com/photo/concert/
+* http://mystock.themeisle.com/photo/rock-on/
+
+- Wedding Photography
+* http://mystock.themeisle.com/photo/wedding-flower-decorations/
+* http://mystock.themeisle.com/photo/bride-and-groom-table-decorated-with-flowers-2/
+* http://mystock.themeisle.com/photo/bride-and-groom/
+
+- Photography Studio
+* https://stocksnap.io/photo/3IJLXXN9OY
+* https://stocksnap.io/photo/83PSG6Y1FM
+
+- Video Agency
+* http://mystock.themeisle.com/photo/cameras/
+* http://mystock.themeisle.com/photo/protest/
+* http://mystock.themeisle.com/photo/selfie/
+* http://mystock.themeisle.com/photo/flatiron-2/
+
+- Furniture Shop
+* http://mystock.themeisle.com/photo/bathtub-in-the-center-of-the-room/
+* http://mystock.themeisle.com/photo/resort-premium-room/
+* http://mystock.themeisle.com/photo/rocking-chair-on-a-blue-carpet/
+* http://mystock.themeisle.com/photo/resort-room-with-a-view/
+* http://mystock.themeisle.com/photo/couch-with-two-green-pillows/
+
+- Farm
+* http://mystock.themeisle.com/photo/yellow-and-green/
+* http://mystock.themeisle.com/photo/oranges/
+* http://mystock.themeisle.com/photo/swamp/
+* http://mystock.themeisle.com/photo/strawberries-and-oranges-for-sale-in-baskets/
+* http://mystock.themeisle.com/photo/rosehip/
+
+- Photographer
+* http://mystock.themeisle.com/photo/old-casino/
+* http://mystock.themeisle.com/photo/photographer-3/
+* http://mystock.themeisle.com/photo/sea-breeze/
+* http://mystock.themeisle.com/photo/church/
+* http://mystock.themeisle.com/photo/flatiron-2/
+
+- Kindergarten
+* https://stocksnap.io/photo/NY963ZH6T2
+* https://stocksnap.io/photo/PBHFF6RJPH
+
+- Florist
+* https://stocksnap.io/photo/01SN8V4M9O
+* http://mystock.themeisle.com/photo/wedding-bouquet/
+* http://mystock.themeisle.com/photo/wedding-flower-decorations/
+
+- Cake Shop
+* https://stocksnap.io/photo/F6DNP46F78
+* https://stocksnap.io/photo/7G24TFZEKU
+
+- Transport
+* http://mystock.themeisle.com/photo/docks/
+* http://mystock.themeisle.com/photo/industrial-boat/
+
+- eBook
+* http://mystock.themeisle.com/photo/the-statue-of-liberty-at-sunset/
+* http://mystock.themeisle.com/photo/brasov-old-city/
+* http://mystock.themeisle.com/photo/mysterious-man-2/
+
+- Speed
+* http://mystock.themeisle.com/photo/couch-with-two-green-pillows/
+* http://mystock.themeisle.com/photo/mannequin/
+* http://mystock.themeisle.com/photo/grooms-suite/
+* http://mystock.themeisle.com/photo/luggage-tag-label-on-suitcase-or-bag-with-the-sea-behind-it/
+
+- Food Magazine
+* https://mystock.themeisle.com/photo/caesar-salad/
+* https://mystock.themeisle.com/photo/indian-restaurant-dishes/
+* https://mystock.themeisle.com/photo/mac-and-cheese-pizza/
+* https://mystock.themeisle.com/photo/delicious-morning-breakfast-served-on-a-tray/
+
+- Web Design
+* https://mystock.themeisle.com/photo/programming-laptop/
+* https://mystock.themeisle.com/photo/ipad/
+
+- Yoga Studio
+* https://stocksnap.io/photo/OYD9ZOOCCQ
+* https://stocksnap.io/photo/TL7LKEE0HR
+* https://stocksnap.io/photo/W23EUNXBCG
+* https://stocksnap.io/photo/MM6OVJGYRU
+* https://mystock.themeisle.com/photo/floor-pattern/
+
+- Sales Funnel
+* https://mystock.themeisle.com/photo/cityscape-of-new-york-2/
+
+- Church
+* https://mystock.themeisle.com/photo/vatican-streets/
+* https://stocksnap.io/photo/M2XAYFTTEN
+* https://stocksnap.io/photo/MOUVID40QD
+* https://stocksnap.io/photo/AM7OQR2274
+
+- Fashion Magazine
+* https://stocksnap.io/photo/F08ZV0M412
+* https://stocksnap.io/photo/V5A73VEOJO
+* https://stocksnap.io/photo/AOOC3CJARN
+* https://stocksnap.io/photo/HKTKMOVXNO
+
+- Winery
+* https://stocksnap.io/photo/CM4WVU6WO0
+
+- News Magazine
+* https://mystock.themeisle.com/photo/man-sitting-under-a-tree/
+* https://mystock.themeisle.com/photo/smartphone/
+* https://mystock.themeisle.com/photo/protest/
+* https://mystock.themeisle.com/photo/indian-food-bhel-puri-2/
+* https://mystock.themeisle.com/photo/skiers/
+* https://mystock.themeisle.com/photo/new-york-skyscrapers-on-a-cloudy-wheather/
+* https://mystock.themeisle.com/photo/metropolitan-museum/
+
+- Coworking
+* https://mystock.themeisle.com/photo/hotel-lobby/
+* https://mystock.themeisle.com/photo/code-in-wp/
+
+- Fishing
+* https://mystock.themeisle.com/photo/boat-on-a-volcanic-green-lake-surrounded-of-a-forest-2/
+
+- Car Rental
+* https://stocksnap.io/photo/5XRZI55HKV
+* https://stocksnap.io/photo/Q1KQCULDV5
+* https://stocksnap.io/photo/OYLXO1QZ5K
+
+- Ski Resort
+* https://stocksnap.io/photo/Z5WEX57EKA
+* https://mystock.themeisle.com/photo/mountain/
+* https://mystock.themeisle.com/photo/gondola-2/
+* https://stocksnap.io/photo/QT3VEK73I5
+* https://stocksnap.io/photo/JJE5DPU0U9
+* https://stocksnap.io/photo/KRXK7LH6XL
+
+- Digital Product
+* https://mystock.themeisle.com/photo/cityscape-of-new-york-2/
+
+- Moving Company
+* https://stocksnap.io/photo/YF3WGBL0AK
+
+- Translation Services
+* https://mystock.themeisle.com/photo/metropolitan-museum/
+
+- Blogger
+* https://mystock.themeisle.com/photo/passing-girl/
+
+- Coupons
+* https://mystock.themeisle.com/photo/gift-shop-in-punjim/
+* https://mystock.themeisle.com/photo/teddy/
+* https://mystock.themeisle.com/photo/couch-with-two-green-pillows/
+* https://mystock.themeisle.com/photo/luggage-tag-label-on-suitcase-or-bag-with-the-sea-behind-it/
+
+- Escape Room
+* https://mystock.themeisle.com/photo/scary-nymph-group-holding-hands-2/
+* https://mystock.themeisle.com/photo/mannequin/
+* https://mystock.themeisle.com/photo/light-carpet/
+* https://mystock.themeisle.com/photo/mannequin-with-unicorn-mask-standing-in-the-window/
+
+- Resume
+* https://mystock.themeisle.com/photo/programming-laptop-2/
+* https://mystock.themeisle.com/photo/thinking-time/
+
+- Wellness Spa
+* https://mystock.themeisle.com/photo/bathtub-in-the-center-of-the-room/
+* https://mystock.themeisle.com/photo/hotel-with-terrace-on-the-sea/
+* https://mystock.themeisle.com/photo/exotic-beach-in-maldives/
+
+- Courses
+* https://stocksnap.io/photo/SCC00WCQ3I
+* https://mystock.themeisle.com/photo/code-in-wp/
+* https://mystock.themeisle.com/photo/photographer-2/
+* https://mystock.themeisle.com/photo/browser-tabs/
+
+- Fashion Model Agency
+* https://mystock.themeisle.com/photo/thinking-time/
+* https://mystock.themeisle.com/photo/bride-and-groom/
+* https://mystock.themeisle.com/photo/mannequin/
+* https://stocksnap.io/photo/WB9WHQU68Q
+* https://stocksnap.io/photo/F08ZV0M412
+* https://stocksnap.io/photo/Q8FQMQWYKB
+* https://stocksnap.io/photo/D626O6RC44
+
+- IT Technology Agency
+* https://mystock.themeisle.com/photo/programming-laptop-2/
+* https://mystock.themeisle.com/photo/couple-jogging-together-along-the-river-coas/
+* https://mystock.themeisle.com/photo/new-york-skyscrapers-on-a-cloudy-wheather/
+
+- Christmas Market
+* https://stocksnap.io/photo/A8CFE9WADG
+* https://mystock.themeisle.com/photo/young-boy-attending-a-concert/
+* https://mystock.themeisle.com/photo/pool-party/
+
+- Podcast
+* https://mystock.themeisle.com/photo/tour-eiffel/
+* https://mystock.themeisle.com/photo/new-york-skyscrapers-on-a-cloudy-wheather/
+* https://mystock.themeisle.com/photo/harbour-air-seaplanes-docked-in-maldives-2/
+* https://mystock.themeisle.com/photo/fancy-restaurant/
+* https://mystock.themeisle.com/photo/registration/
+
+- Digital Agency
+* https://stocksnap.io/photo/RCFX768X06
+* https://mystock.themeisle.com/photo/bucharest-at-night/
+* https://mystock.themeisle.com/photo/browser-tabs/
+* https://mystock.themeisle.com/photo/code-in-wp/
+* https://mystock.themeisle.com/photo/tourists/

@@ -13,9 +13,7 @@
   form {
     position: relative;
     width: 75%;
-    &:after {
-      font-family: "neve-icons";
-      content: "\f002";
+    .nv-search-icon-wrap {
       position: absolute;
       top: 0;
       right: 0;
@@ -61,11 +59,8 @@
 }
 
 .menu-item-nav-search {
+  cursor: pointer;
   outline: 0;
-}
-
-.menu-item-nav-search:not(.responsive-nav-search).nv-nav-search {
-  padding: $spacing-xs 0;
 }
 
 .menu-item-nav-search > a {
@@ -73,8 +68,7 @@
 }
 
 .nv-nav-search {
-  padding: 0;
-  visibility: hidden;
+  pointer-events: none;
   opacity: 0;
   transition: $transition_med;
   position: absolute;
@@ -86,10 +80,8 @@
   cursor: default;
   z-index: 100;
   @include soft-box-shadow();
-  .search-submit {
-  }
   .menu-item-nav-search.active & {
-    visibility: visible;
+    pointer-events: initial;
     opacity: 1;
   }
   form {
@@ -106,8 +98,8 @@
 }
 
 a.button.close-responsive-search {
-  @include button();
-  @include button-secondary();
+  @extend %nv-button;
+  @extend %nv-button-secondary;
 }
 
 .nav-clickaway-overlay {
@@ -123,28 +115,13 @@ a.button.close-responsive-search {
   height: 100vh;
 }
 
-#nv-primary-navigation .menu-item-nav-search:not(.responsive-nav-search) {
+ul[id^="nv-primary-navigation"] .menu-item-nav-search:not(.responsive-nav-search) {
   display: none;
 }
 
-.menu-item-nav-search.responsive-nav-search {
-  padding-left: 12px;
-  > a {
-    color: $git-black;
-    font-size: 1.2em;
-  }
-}
-
 @mixin nav-search--laptop() {
-  .menu-item-nav-search.responsive-nav-search {
-    display: none;
-  }
-
-  #nv-primary-navigation .menu-item-nav-search:not(.responsive-nav-search) {
+  .row ul[id^="nv-primary-navigation"] .menu-item-nav-search:not(.responsive-nav-search) {
     display: block;
   }
 
-  #nv-primary-navigation > li.menu-item-nav-search > a {
-    display: block;
-  }
 }

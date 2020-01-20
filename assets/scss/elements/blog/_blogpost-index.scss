@@ -1,7 +1,5 @@
 .entry-title {
   word-wrap: break-word;
-  font-weight: 600;
-  line-height: 1.3em;
 
   a {
     color: $body-color;
@@ -14,10 +12,32 @@
   }
 }
 
-.posts-wrapper .excerpt-wrap {
-  color: $gray-color;
+.nv-shadow-1{
+  .nv-post-thumbnail-wrap{
+    box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
 }
 
+.nv-shadow-2{
+  .nv-post-thumbnail-wrap {
+    box-shadow: 0 3px 6px -5px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+.nv-shadow-3{
+  .nv-post-thumbnail-wrap {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+.nv-shadow-4{
+  .nv-post-thumbnail-wrap {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12), 0 10px 10px rgba(0, 0, 0, 0.12);
+  }
+}
+.nv-shadow-5{
+  .nv-post-thumbnail-wrap {
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,0.56), 0 4px 25px 0 rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.2);
+  }
+}
 .nv-post-thumbnail-wrap {
   amp-img {
     display: inline-block;
@@ -72,6 +92,7 @@
 .nv-index-posts .posts-wrapper {
   display: flex;
   flex-wrap: wrap;
+  box-sizing: content-box;
 }
 
 .nv-index-posts .page-numbers {
@@ -87,7 +108,6 @@
     &:last-child {
       margin-bottom: 0;
     }
-
     &:first-child {
       margin-top: 0;
     }
@@ -96,6 +116,9 @@
       margin-top: 0;
     }
   }
+	.excerpt-wrap > *:last-child{
+		margin-bottom: 0;
+	}
 }
 
 .nv-non-grid-article {

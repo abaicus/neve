@@ -22,22 +22,20 @@ class Template_Parts extends Base_View {
 	public function init() {
 		add_action( 'neve_blog_post_template_part_content', array( $this, 'render_post' ) );
 		add_filter( 'excerpt_more', array( $this, 'link_excerpt_more' ) );
+		add_filter( 'the_content_more_link', array( $this, 'link_excerpt_more' ) );
 	}
 
 	/**
 	 * Render the post.
 	 */
 	public function render_post() {
-		?>
-		<article id="post-<?php echo esc_attr( get_the_ID() ); ?>"
-				class="<?php echo esc_attr( $this->post_class() ); ?>">
-			<div class="article-content-col">
-				<div class="content">
-					<?php $this->render_article_inner_content(); ?>
-				</div>
-			</div>
-		</article>
-		<?php
+		$args = array(
+			'post_id'    => 'post-' . get_the_ID(),
+			'post_class' => $this->post_class(),
+			'content'    => $this->get_article_inner_content(),
+		);
+
+		$this->get_view( 'archive-post', $args );
 	}
 
 	/**
@@ -46,29 +44,36 @@ class Template_Parts extends Base_View {
 	private function post_class() {
 		$class = join( ' ', get_post_class() );
 
+		$box_shadow = (int) $this->get_box_shadow();
+		if ( $box_shadow !== 0 ) {
+			$class .= ' nv-shadow-' . $box_shadow;
+		}
 		$class .= ' col-12 layout-' . $this->get_layout();
 		if ( $this->get_layout() === 'grid' ) {
 			$class .= ' ' . $this->get_grid_columns_class();
 		} else {
 			$class .= ' nv-non-grid-article';
 		}
-
 		return $class;
 	}
 
 	/**
 	 * Render inner content for <article>
+	 *
+	 * @return string
 	 */
-	private function render_article_inner_content() {
-		if ( $this->get_layout() !== 'grid' ) {
-			$this->post_thumbnail();
-			echo '<div class="non-grid-content ' . esc_attr( $this->get_layout() ) . '-layout-content">';
-			$this->title();
-			$this->meta();
-			$this->excerpt();
-			echo '</div>';
+	private function get_article_inner_content() {
+		$markup = '';
 
-			return;
+		if ( $this->get_layout() !== 'grid' ) {
+			$markup .= $this->get_post_thumbnail();
+			$markup .= '<div class="non-grid-content ' . esc_attr( $this->get_layout() ) . '-layout-content">';
+			$markup .= $this->get_title();
+			$markup .= $this->get_meta();
+			$markup .= $this->get_excerpt();
+			$markup .= '</div>';
+
+			return $markup;
 		}
 
 		$default_order = array(
@@ -81,33 +86,37 @@ class Template_Parts extends Base_View {
 		foreach ( $order as $content_bit ) {
 			switch ( $content_bit ) {
 				case 'thumbnail':
-					$this->post_thumbnail();
+					$markup .= $this->get_post_thumbnail();
 					break;
 				case 'title':
-					$this->title();
+					$markup .= $this->get_title();
 					break;
 				case 'meta':
-					$this->meta();
+					$markup .= $this->get_meta();
 					break;
 				case 'title-meta':
-					$this->title();
-					$this->meta();
+					$markup .= $this->get_title();
+					$markup .= $this->get_meta();
 					break;
 				case 'excerpt':
-					$this->excerpt();
+					$markup .= $this->get_excerpt();
 					break;
-				case 'default':
+				default:
 					break;
 			}
 		}
+
+		return $markup;
 	}
 
 	/**
 	 * Render the post thumbnail.
+	 *
+	 * @return string
 	 */
-	private function post_thumbnail() {
+	private function get_post_thumbnail() {
 		if ( ! has_post_thumbnail() ) {
-			return;
+			return '';
 		}
 		$markup = '<div class="nv-post-thumbnail-wrap">';
 
@@ -123,7 +132,14 @@ class Template_Parts extends Base_View {
 		$markup .= '</a>';
 		$markup .= '</div>';
 
-		echo $markup;
+		return $markup;
+	}
+
+	/**
+	 * Get box shadow type.
+	 */
+	private function get_box_shadow() {
+		return get_theme_mod( 'neve_post_thumbnail_box_shadow', 0 );
 	}
 
 	/**
@@ -137,21 +153,27 @@ class Template_Parts extends Base_View {
 
 	/**
 	 * Render title.
+	 *
+	 * @return string
 	 */
-	private function title() {
-		?>
-		<h2 class="blog-entry-title entry-title">
-			<a href="<?php esc_url( the_permalink() ); ?>" rel="bookmark">
-				<?php the_title(); ?>
-			</a>
-		</h2>
-		<?php
+	private function get_title() {
+		$markup = '';
+
+		$markup .= '<h2 class="blog-entry-title entry-title">';
+		$markup .= '<a href="' . esc_url( get_the_permalink() ) . '" rel="bookmark">';
+		$markup .= get_the_title();
+		$markup .= '</a>';
+		$markup .= '</h2>';
+
+		return $markup;
 	}
 
 	/**
 	 * Render meta.
+	 *
+	 * @return string
 	 */
-	private function meta() {
+	private function get_meta() {
 		$default_meta_order = json_encode(
 			array(
 				'author',
@@ -162,14 +184,25 @@ class Template_Parts extends Base_View {
 
 		$meta_order = get_theme_mod( 'neve_post_meta_ordering', $default_meta_order );
 		$meta_order = json_decode( $meta_order );
+
+		ob_start();
 		do_action( 'neve_post_meta_archive', $meta_order );
+		$meta = ob_get_clean();
+
+		return $meta;
 	}
 
 	/**
 	 * Render excerpt.
+	 *
+	 * @return string
 	 */
-	private function excerpt() {
+	private function get_excerpt() {
+		ob_start();
 		do_action( 'neve_excerpt_archive', 'index' );
+		$excerpt = ob_get_clean();
+
+		return $excerpt;
 	}
 
 	/**
@@ -194,14 +227,34 @@ class Template_Parts extends Base_View {
 	 * @return string
 	 */
 	public function link_excerpt_more( $moretag ) {
-		$moretag = '';
 
-		$moretag .= '&hellip;&nbsp;<a href="' . esc_url( get_the_permalink() ) . '" rel="bookmark">';
+		$new_moretag = '&hellip;&nbsp;';
 
-		$moretag .= esc_html__( 'Read More', 'neve' );
-		$moretag .= '<span class="screen-reader-text">' . get_the_title() . '</span>';
-		$moretag .= ' &raquo;</a>';
+		if ( isset( $moretag ) && ( $moretag !== ' [&hellip;]' ) ) {
+			$new_moretag = '';
+		}
 
-		return $moretag;
+		$read_more_args = apply_filters(
+			'neve_read_more_args',
+			array(
+				'text'    => esc_html__( 'Read More', 'neve' ) . ' &raquo;',
+				'classes' => '',
+			)
+		);
+
+		$markup  = '<a href="' . esc_url( get_the_permalink() ) . '"';
+		$markup .= ' class="' . esc_attr( $read_more_args['classes'] ) . '"';
+		$markup .= ' rel="bookmark">';
+		$markup .= esc_html( $read_more_args['text'] );
+		$markup .= '<span class="screen-reader-text">' . get_the_title() . '</span>';
+		$markup .= '</a>';
+
+		if ( ! empty( $read_more_args['classes'] ) ) {
+			$markup = '<div class="read-more-wrapper" style="padding: 10px 0 0;">' . $markup . '</div>';
+		}
+
+		$new_moretag .= $markup;
+
+		return $new_moretag;
 	}
 }

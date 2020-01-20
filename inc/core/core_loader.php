@@ -43,13 +43,18 @@ class Core_Loader {
 			'neve_filter_main_modules',
 			array(
 				'Customizer\Loader',
-				'Views\Typography',
+				'Views\Tweaks',
+				'Views\Font_Manager',
 				'Views\Top_Bar',
 				'Views\Header',
-				'Views\Footer',
 				'Views\Template_Parts',
 				'Views\Page_Header',
-				'Views\Post_Header',
+				'Views\Post_Layout',
+				'Views\Page_Layout',
+				'Views\Product_Layout',
+				'Views\Content_None',
+				'Views\Content_404',
+				'Views\Breadcrumbs',
 
 				'Views\Layouts\Layout_Container',
 				'Views\Layouts\Layout_Sidebar',
@@ -65,14 +70,17 @@ class Core_Loader {
 				'Views\Inline\Front_End_Style_Manager',
 				'Views\Inline\Gutenberg_Style_Manager',
 
-				'Compatibility\Gutenberg',
+				'Compatibility\Generic',
 				'Compatibility\WooCommerce',
 				'Compatibility\Elementor',
+				'Compatibility\Header_Footer_Elementor',
 				'Compatibility\Amp',
+				'Compatibility\Header_Footer_Beaver',
 				'Compatibility\Beaver',
+				'Compatibility\Lifter',
+				'Compatibility\PWA',
 
 				'Admin\Metabox\Manager',
-				'Admin\Metabox\Main',
 			)
 		);
 	}
@@ -97,6 +105,7 @@ class Core_Loader {
 		$admin = new Admin();
 		add_action( 'init', array( $admin, 'load_site_import' ) );
 		add_action( 'init', array( $admin, 'do_about_page' ) );
+		add_action( 'ti-about-after-sidebar-content', array( $admin, 'render_logger_toggle' ) );
 
 		$front_end = new Front_End();
 		add_action( 'wp_enqueue_scripts', array( $front_end, 'enqueue_scripts' ) );

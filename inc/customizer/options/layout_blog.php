@@ -32,6 +32,7 @@ class Layout_Blog extends Base_Customizer {
 		$this->control_pagination_type();
 		$this->control_content_order();
 		$this->control_meta_order();
+		$this->control_author_avatar();
 	}
 
 	/**
@@ -112,7 +113,7 @@ class Layout_Blog extends Base_Customizer {
 					'default'           => false,
 				),
 				array(
-					'type'            => 'checkbox-toggle',
+					'type'            => 'checkbox',
 					'priority'        => 35,
 					'section'         => 'neve_blog_archive_layout',
 					'label'           => esc_html__( 'Enable Masonry', 'neve' ),
@@ -144,7 +145,7 @@ class Layout_Blog extends Base_Customizer {
 						'max'     => 300,
 						'default' => 40,
 					),
-					'priority'   => 40,
+					'priority'   => 35,
 				),
 				'Neve\Customizer\Controls\Range'
 			)
@@ -165,7 +166,7 @@ class Layout_Blog extends Base_Customizer {
 				array(
 					'label'    => esc_html__( 'Post Pagination', 'neve' ),
 					'section'  => 'neve_blog_archive_layout',
-					'priority' => 45,
+					'priority' => 40,
 					'type'     => 'select',
 					'choices'  => array(
 						'number'   => esc_html__( 'Number', 'neve' ),
@@ -185,7 +186,7 @@ class Layout_Blog extends Base_Customizer {
 	 */
 	public function sanitize_blog_layout( $value ) {
 		$allowed_values = array( 'default', 'alternative', 'grid' );
-		if ( ! in_array( $value, $allowed_values ) ) {
+		if ( ! in_array( $value, $allowed_values, true ) ) {
 			return 'default';
 		}
 
@@ -201,7 +202,7 @@ class Layout_Blog extends Base_Customizer {
 	 */
 	public function sanitize_pagination_type( $value ) {
 		$allowed_values = array( 'number', 'infinite' );
-		if ( ! in_array( $value, $allowed_values ) ) {
+		if ( ! in_array( $value, $allowed_values, true ) ) {
 			return 'number';
 		}
 
@@ -236,10 +237,33 @@ class Layout_Blog extends Base_Customizer {
 					'section'         => 'neve_blog_archive_layout',
 					'type'            => 'ordering',
 					'components'      => $components,
-					'priority'        => 55,
+					'priority'        => 45,
 					'active_callback' => array( $this, 'should_show_content_ordering' ),
 				),
 				'Neve\Customizer\Controls\Ordering'
+			)
+		);
+
+		$this->add_control(
+			new Control(
+				'neve_post_thumbnail_box_shadow',
+				array(
+					'sanitize_callback' => 'neve_sanitize_range_value',
+					'default'           => 0,
+				),
+				array(
+					'label'      => esc_html__( 'Thumbnail Shadow', 'neve' ),
+					'section'    => 'neve_blog_archive_layout',
+					'type'       => 'range-value',
+					'step'       => 1,
+					'input_attr' => array(
+						'min'     => 0,
+						'max'     => 5,
+						'default' => 0,
+					),
+					'priority'   => 50,
+				),
+				'Neve\Customizer\Controls\Range'
 			)
 		);
 	}
@@ -254,11 +278,14 @@ class Layout_Blog extends Base_Customizer {
 			'comments',
 		);
 
-		$components = array(
-			'author'   => __( 'Author', 'neve' ),
-			'category' => __( 'Category', 'neve' ),
-			'date'     => __( 'Date', 'neve' ),
-			'comments' => __( 'Comments', 'neve' ),
+		$components = apply_filters(
+			'neve_meta_filter',
+			array(
+				'author'   => __( 'Author', 'neve' ),
+				'category' => __( 'Category', 'neve' ),
+				'date'     => __( 'Date', 'neve' ),
+				'comments' => __( 'Comments', 'neve' ),
+			)
 		);
 
 		$this->add_control(
@@ -290,6 +317,7 @@ class Layout_Blog extends Base_Customizer {
 			'category',
 			'date',
 			'comments',
+			'reading',
 		);
 
 		if ( empty( $value ) ) {
@@ -299,7 +327,7 @@ class Layout_Blog extends Base_Customizer {
 		$decoded = json_decode( $value, true );
 
 		foreach ( $decoded as $val ) {
-			if ( ! in_array( $val, $allowed ) ) {
+			if ( ! in_array( $val, $allowed, true ) ) {
 				return $allowed;
 			}
 		}
@@ -324,7 +352,7 @@ class Layout_Blog extends Base_Customizer {
 		$decoded = json_decode( $value, true );
 
 		foreach ( $decoded as $val ) {
-			if ( ! in_array( $val, $allowed ) ) {
+			if ( ! in_array( $val, $allowed, true ) ) {
 				return $allowed;
 			}
 		}
@@ -350,7 +378,7 @@ class Layout_Blog extends Base_Customizer {
 		);
 		$content_order = get_theme_mod( 'neve_post_content_ordering', json_encode( $default ) );
 		$content_order = json_decode( $content_order, true );
-		if ( ! in_array( 'title-meta', $content_order ) ) {
+		if ( ! in_array( 'title-meta', $content_order, true ) ) {
 			return false;
 		}
 
@@ -392,14 +420,54 @@ class Layout_Blog extends Base_Customizer {
 	 */
 	public function should_show_masonry() {
 		$blog_layout = get_theme_mod( 'neve_blog_archive_layout', 'grid' );
-		$columns     = get_theme_mod( 'neve_grid_layout', 1 );
+		$columns     = (int) get_theme_mod( 'neve_grid_layout', 1 );
 		if ( $blog_layout !== 'grid' ) {
 			return false;
 		}
-		if ( $columns == 1 ) {
+		if ( $columns === 1 ) {
 			return false;
 		}
 
 		return true;
+	}
+
+	/**
+	 * Author avatar options
+	 */
+	private function control_author_avatar() {
+		$this->add_control(
+			new Control(
+				'neve_author_avatar_options',
+				array(
+					'sanitize_callback' => 'sanitize_text_field',
+				),
+				array(
+					'label'            => esc_html__( 'Author Avatar', 'neve' ),
+					'section'          => 'neve_blog_archive_layout',
+					'priority'         => 70,
+					'class'            => 'advanced-sidebar-accordion',
+					'accordion'        => false,
+					'controls_to_wrap' => 2,
+				),
+				'Neve\Customizer\Controls\Heading'
+			)
+		);
+
+		$this->add_control(
+			new Control(
+				'neve_author_avatar',
+				array(
+					'sanitize_callback' => 'neve_sanitize_checkbox',
+					'default'           => false,
+				),
+				array(
+					'label'    => esc_html__( 'Show Author Avatar', 'neve' ),
+					'section'  => 'neve_blog_archive_layout',
+					'type'     => 'checkbox',
+					'priority' => 75,
+				),
+				'Neve\Customizer\Controls\Checkbox'
+			)
+		);
 	}
 }

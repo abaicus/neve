@@ -42,16 +42,15 @@ class Layout_Sidebar extends Base_View {
 		if ( ! is_active_sidebar( $sidebar_setup['sidebar_slug'] ) ) {
 			return;
 		}
-		?>
 
-		<div class="nv-sidebar-wrap col-sm-12 <?php echo esc_attr( 'nv-' . $position ) . ' ' . esc_attr( $sidebar_setup['sidebar_slug'] ); ?>"
-			<?php echo wp_kses_post( apply_filters( 'neve_sidebar_data_attrs', '', $sidebar_setup['sidebar_slug'] ) ); ?>>
-			<?php $this->render_sidebar_close( $sidebar_setup['sidebar_slug'] ); ?>
-			<aside id="secondary" role="complementary">
-				<?php dynamic_sidebar( $sidebar_setup['sidebar_slug'] ); ?>
-			</aside>
-		</div>
-		<?php
+		$args = array(
+			'wrap_classes' => 'nv-' . $position . ' ' . $sidebar_setup['sidebar_slug'],
+			'data_attrs'   => apply_filters( 'neve_sidebar_data_attrs', '', $sidebar_setup['sidebar_slug'] ),
+			'close_button' => $this->get_sidebar_close( $sidebar_setup['sidebar_slug'] ),
+			'slug'         => $sidebar_setup['sidebar_slug'],
+		);
+
+		$this->get_view( 'sidebar', $args );
 	}
 
 	/**
@@ -70,6 +69,10 @@ class Layout_Sidebar extends Base_View {
 
 		$classes[] = 'nv-sidebar-' . $theme_mod;
 
+		if ( ! $sidebar_setup['has_widgets'] && $theme_mod !== 'full-width' ) {
+			$classes[] = 'nv-empty-sidebar';
+		}
+
 		return $classes;
 	}
 
@@ -87,12 +90,13 @@ class Layout_Sidebar extends Base_View {
 			'sidebar_slug' => 'blog-sidebar',
 		);
 
-		if ( class_exists( 'WooCommerce' ) && ( is_woocommerce() || is_product() || is_cart() || is_checkout() || is_account_page() ) ) {
+		if ( class_exists( 'WooCommerce', false ) && ( is_woocommerce() || is_product() || is_cart() || is_checkout() || is_account_page() ) ) {
 			$sidebar_setup['sidebar_slug'] = 'shop-sidebar';
 		}
 
 		if ( $advanced_options === false ) {
-			$sidebar_setup['theme_mod'] = 'neve_default_sidebar_layout';
+			$sidebar_setup['theme_mod']   = 'neve_default_sidebar_layout';
+			$sidebar_setup['has_widgets'] = is_active_sidebar( $sidebar_setup['sidebar_slug'] );
 
 			return $sidebar_setup;
 		}
@@ -103,7 +107,7 @@ class Layout_Sidebar extends Base_View {
 				break;
 			case 'single-post':
 				$sidebar_setup['theme_mod'] = 'neve_single_post_sidebar_layout';
-				if ( class_exists( 'WooCommerce' ) && is_product() ) {
+				if ( class_exists( 'WooCommerce', false ) && is_product() ) {
 					$sidebar_setup['theme_mod'] = 'neve_single_product_sidebar_layout';
 				}
 				break;
@@ -111,7 +115,7 @@ class Layout_Sidebar extends Base_View {
 				$sidebar_setup['theme_mod'] = 'neve_other_pages_sidebar_layout';
 				break;
 			case 'shop':
-				if ( class_exists( 'WooCommerce' ) ) {
+				if ( class_exists( 'WooCommerce', false ) ) {
 					$sidebar_setup['sidebar_slug'] = 'shop-sidebar';
 					if ( is_woocommerce() ) {
 						$sidebar_setup['theme_mod'] = 'neve_shop_archive_sidebar_layout';
@@ -125,6 +129,8 @@ class Layout_Sidebar extends Base_View {
 				$sidebar_setup['theme_mod'] = 'neve_other_pages_sidebar_layout';
 		}
 
+		$sidebar_setup['has_widgets'] = is_active_sidebar( $sidebar_setup['sidebar_slug'] );
+
 		return $sidebar_setup;
 	}
 
@@ -132,14 +138,17 @@ class Layout_Sidebar extends Base_View {
 	 * Render sidebar toggle.
 	 *
 	 * @param string $slug sidebar slug.
+	 *
+	 * @return string
 	 */
-	private function render_sidebar_close( $slug ) {
+	private function get_sidebar_close( $slug ) {
 		if ( $slug !== 'shop-sidebar' ) {
-			return;
+			return '';
 		}
 		$label        = apply_filters( 'neve_filter_sidebar_close_button_text', __( 'Close', 'neve' ), $slug );
 		$button_attrs = apply_filters( 'neve_filter_sidebar_close_button_data_attrs', '', $slug );
-		echo '<div class="sidebar-header"><span class="nv-sidebar-toggle in-sidebar button button-secondary" ' . esc_attr( $button_attrs ) . '>' . esc_html( $label ) . '</span></div>';
+
+		return '<div class="sidebar-header"><span class="nv-sidebar-toggle in-sidebar button button-secondary" ' . $button_attrs . '>' . esc_html( $label ) . '</span></div>';
 	}
 
 	/**
@@ -148,7 +157,7 @@ class Layout_Sidebar extends Base_View {
 	 * @return string
 	 */
 	private function get_context() {
-		if ( class_exists( 'WooCommerce' ) && ( is_woocommerce() || is_product() || is_cart() || is_checkout() || is_account_page() ) ) {
+		if ( class_exists( 'WooCommerce', false ) && ( is_woocommerce() || is_product() || is_cart() || is_checkout() || is_account_page() ) ) {
 			return 'shop';
 		}
 

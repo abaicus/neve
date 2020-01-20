@@ -8,6 +8,8 @@
 
 namespace Neve\Views\Inline;
 
+use Neve\Views\Font_Manager;
+
 /**
  * Class Gutenberg_Editor
  *
@@ -15,55 +17,94 @@ namespace Neve\Views\Inline;
  */
 class Gutenberg_Editor extends Base_Inline {
 	/**
+	 * Body font weight
+	 *
+	 * @var array
+	 */
+	private $body_weight = [ 400 ];
+	/**
+	 * Body font family
+	 *
+	 * @var string
+	 */
+	private $body_family = '';
+	/**
+	 * Headings font weights
+	 *
+	 * @var array
+	 */
+	private $heading_weights = [ 600 ];
+	/**
+	 * Headings font family
+	 *
+	 * @var string
+	 */
+	private $headings_family = '';
+
+	/**
 	 * Do all actions necessary.
 	 *
 	 * @return void
 	 */
 	public function init() {
 		$this->add_font_families();
-		$this->add_font_sizes();
+		$this->add_typeface_values();
 		$this->add_container_style();
-		$this->add_content_width();
 		$this->add_colors();
+		$this->add_google_fonts();
 	}
 
 	/**
-	 * Add font families.
+	 * Add heading styles.
 	 */
 	private function add_font_families() {
 		$headings_font = get_theme_mod( 'neve_headings_font_family', false );
 		$body_font     = get_theme_mod( 'neve_body_font_family', false );
+
+		$style_setup = array();
+		if ( ! empty( $headings_font ) && $headings_font !== 'default' ) {
+			$style_setup[]         = array(
+				'css_prop' => 'font-family',
+				'value'    => $headings_font,
+			);
+			$this->headings_family = $headings_font;
+		}
 		$this->add_style(
-			array(
-				array(
-					'css_prop' => 'font-family',
-					'value'    => esc_html( $headings_font ),
-				),
-			),
-			'.block-editor-page #wpwrap .editor-post-title__block .editor-post-title__input, 
-			.block-editor-page #wpwrap .editor-styles-wrapper h1, 
-			.block-editor-page #wpwrap .editor-styles-wrapper h2, 
-			.block-editor-page #wpwrap .editor-styles-wrapper h3, 
-			.block-editor-page #wpwrap .editor-styles-wrapper h4, 
-			.block-editor-page #wpwrap .editor-styles-wrapper h5, 
-			.block-editor-page #wpwrap .editor-styles-wrapper h6'
+			$style_setup,
+			'#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input, 
+			#editor .editor-styles-wrapper h1, 
+			#editor .editor-styles-wrapper h2, 
+			#editor .editor-styles-wrapper h3, 
+			#editor .editor-styles-wrapper h4, 
+			#editor .editor-styles-wrapper h5, 
+			#editor .editor-styles-wrapper h6'
 		);
-		$this->add_style(
-			array(
-				array(
-					'css_prop' => 'font-family',
-					'value'    => esc_html( $body_font ),
-				),
-			),
-			'.block-editor-page #wpwrap .editor-styles-wrapper .editor-writing-flow'
-		);
+
+		$body_style_setup = array();
+		if ( ! empty( $body_font ) && $body_font !== 'default' ) {
+			$body_style_setup[] = array(
+				'css_prop' => 'font-family',
+				'value'    => $body_font,
+			);
+			$this->body_family  = $body_font;
+		}
+		$this->add_style( $body_style_setup, '#editor .editor-styles-wrapper .editor-writing-flow' );
 	}
 
 	/**
-	 * Container styles applied to the .wp-block class.
+	 * Container styles applied to the .editor-styles-wrapper class.
 	 */
 	private function add_container_style() {
-		$container_width = get_theme_mod( 'neve_container_width' );
+		$container_width = get_theme_mod(
+			'neve_container_width',
+			json_encode(
+				[
+					'mobile'  => 748,
+					'tablet'  => 992,
+					'desktop' => 1170,
+				]
+			)
+		);
 		$container_width = json_decode( $container_width, true );
 		$settings        = array(
 			array(
@@ -74,77 +115,8 @@ class Gutenberg_Editor extends Base_Inline {
 		);
 		$this->add_responsive_style(
 			$settings,
-			'.neve-gtb.container.has-sidebar-full-width .neve-blocks-wrap > .editor-block-list__layout > .wp-block:not([data-align=full]):not([data-align=wide]), .neve-gtb.container.has-sidebar-full-width .neve-blocks-wrap .wp-block.editor-post-title__block, .neve-gtb.container.has-sidebar-left .neve-content-wrap, .neve-gtb.container.has-sidebar-right .neve-content-wrap'
+			'.editor-styles-wrapper'
 		);
-	}
-
-	/**
-	 * Add content width.
-	 */
-	private function add_content_width() {
-		$advanced_options = get_theme_mod( 'neve_advanced_layout_options', false );
-		if ( $advanced_options === false ) {
-			$content_width = get_theme_mod( 'neve_sitewide_content_width' );
-
-			if ( $content_width !== false ) {
-				$this->add_style(
-					array(
-						array(
-							'css_prop' => 'max-width',
-							'value'    => absint( $content_width ),
-							'suffix'   => '%',
-						),
-					),
-					'
-				.neve-gtb.has-sidebar-full-width .neve-blocks-wrap > .editor-block-list__layout >  .wp-block:not([data-align=full]):not([data-align=wide])  > *,
-				.neve-gtb.has-sidebar-full-width .neve-blocks-wrap .wp-block.editor-post-title__block > div,
-				.neve-gtb.has-sidebar-left .neve-blocks-wrap, 
-				.neve-gtb.has-sidebar-right .neve-blocks-wrap',
-					'desktop'
-				);
-			}
-
-			return;
-		}
-
-		$post_content_width = get_theme_mod( 'neve_single_post_content_width' );
-		$page_content_width = get_theme_mod( 'neve_other_pages_content_width' );
-
-		if ( $post_content_width !== false ) {
-			$this->add_style(
-				array(
-					array(
-						'css_prop' => 'max-width',
-						'value'    => absint( $post_content_width ),
-						'suffix'   => '%',
-					),
-				),
-				'
-			.block-editor-page.post-type-post .neve-gtb.has-sidebar-full-width .neve-blocks-wrap > .editor-block-list__layout > .wp-block:not([data-align=full]):not([data-align=wide]) > *,
-			.block-editor-page.post-type-post .neve-gtb.has-sidebar-full-width .neve-blocks-wrap .wp-block.editor-post-title__block > div,
-			.block-editor-page.post-type-post .neve-gtb.has-sidebar-left .neve-blocks-wrap, 
-			.block-editor-page.post-type-post .neve-gtb.has-sidebar-right .neve-blocks-wrap',
-				'desktop'
-			);
-		}
-
-		if ( $page_content_width !== false ) {
-			$this->add_style(
-				array(
-					array(
-						'css_prop' => 'max-width',
-						'value'    => absint( $page_content_width ),
-						'suffix'   => '%',
-					),
-				),
-				'
-			.block-editor-page.post-type-page .neve-gtb.has-sidebar-full-width .neve-blocks-wrap > .editor-block-list__layout > .wp-block:not([data-align=full]):not([data-align=wide])  > *,
-			.block-editor-page.post-type-page .neve-gtb.has-sidebar-full-width .neve-blocks-wrap .wp-block.editor-post-title__block > div,
-			.block-editor-page.post-type-page .neve-gtb.has-sidebar-left .neve-blocks-wrap,
-			.block-editor-page.post-type-page .neve-gtb.has-sidebar-right .neve-blocks-wrap',
-				'desktop'
-			);
-		}
 	}
 
 	/**
@@ -175,27 +147,27 @@ class Gutenberg_Editor extends Base_Inline {
 		$color_settings = array(
 			'background_color'      => array(
 				'css_prop'  => 'background-color',
-				'selectors' => '.block-editor-page .editor-styles-wrapper .editor-writing-flow',
+				'selectors' => '#editor .editor-styles-wrapper .editor-writing-flow',
 			),
 			'neve_link_color'       => array(
 				'css_prop'  => 'color',
-				'selectors' => '.block-editor-page .editor-styles-wrapper .editor-writing-flow a',
+				'selectors' => '#editor .editor-styles-wrapper .editor-writing-flow a',
 			),
 			'neve_link_hover_color' => array(
 				'css_prop'  => 'color',
-				'selectors' => '.block-editor-page .editor-styles-wrapper .editor-writing-flow a:hover',
+				'selectors' => '#editor .editor-styles-wrapper .editor-writing-flow a:hover',
 			),
 			'neve_text_color'       => array(
 				'css_prop'  => 'color',
 				'selectors' => '
-				.block-editor-page .editor-styles-wrapper .editor-writing-flow,
-				.block-editor-page .editor-styles-wrapper .editor-post-title__block .editor-post-title__input,
-				.block-editor-page .editor-styles-wrapper h1,
-				.block-editor-page .editor-styles-wrapper h2,
-				.block-editor-page .editor-styles-wrapper h3,
-				.block-editor-page .editor-styles-wrapper h4,
-				.block-editor-page .editor-styles-wrapper h5,
-				.block-editor-page .editor-styles-wrapper h6',
+				#editor .editor-styles-wrapper .editor-writing-flow,
+				#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input,
+				#editor .editor-styles-wrapper h1,
+				#editor .editor-styles-wrapper h2,
+				#editor .editor-styles-wrapper h3,
+				#editor .editor-styles-wrapper h4,
+				#editor .editor-styles-wrapper h5,
+				#editor .editor-styles-wrapper h6',
 			),
 		);
 
@@ -207,25 +179,22 @@ class Gutenberg_Editor extends Base_Inline {
 	/**
 	 * Add font sizes.
 	 */
-	private function add_font_sizes() {
+	private function add_typeface_values() {
 		$controls = array(
-			'body' => '
-			.block-editor-page .editor-styles-wrapper .editor-writing-flow, 
-			.block-editor-page .editor-styles-wrapper .editor-writing-flow p:not(.wp-block-cover-text),
-			.editor-post-title__block',
-			'h1'   => '
-			.block-editor-page .editor-styles-wrapper .editor-writing-flow h1, 
-			.block-editor-page .editor-styles-wrapper .editor-writing-flow .editor-post-title__block .editor-post-title__input',
-			'h2'   => '.block-editor-page .editor-styles-wrapper .editor-writing-flow h2',
-			'h3'   => '.block-editor-page .editor-styles-wrapper .editor-writing-flow h3',
-			'h4'   => '.block-editor-page .editor-styles-wrapper .editor-writing-flow h4',
-			'h5'   => '.block-editor-page .editor-styles-wrapper .editor-writing-flow h5',
-			'h6'   => '.block-editor-page .editor-styles-wrapper .editor-writing-flow h6',
+			'neve_typeface_general'    => '
+			#editor .editor-styles-wrapper .editor-writing-flow .wp-block,
+			.block-editor-block-list__block[data-type="core/paragraph"] p',
+			'neve_h1_typeface_general' => '
+			#editor .editor-styles-wrapper .editor-writing-flow h1, 
+			#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input',
+			'neve_h2_typeface_general' => '#editor .editor-styles-wrapper .editor-writing-flow h2',
+			'neve_h3_typeface_general' => '#editor .editor-styles-wrapper .editor-writing-flow h3',
+			'neve_h4_typeface_general' => '#editor .editor-styles-wrapper .editor-writing-flow h4',
+			'neve_h5_typeface_general' => '#editor .editor-styles-wrapper .editor-writing-flow h5',
+			'neve_h6_typeface_general' => '#editor .editor-styles-wrapper .editor-writing-flow h6',
 		);
 
 		array_walk( $controls, array( $this, 'run_font_settings' ) );
-
-		return;
 	}
 
 	/**
@@ -235,26 +204,63 @@ class Gutenberg_Editor extends Base_Inline {
 	 * @param string $control  the control id.
 	 */
 	private function run_font_settings( $selector, $control ) {
-		$font_size = get_theme_mod( 'neve_' . $control . '_font_size' );
-		$font_size = json_decode( $font_size, true );
+		$value = get_theme_mod( $control );
+		if ( ! is_array( $value ) ) {
+			return;
+		}
 
-		$line_height = get_theme_mod( 'neve_' . $control . '_line_height' );
-		$line_height = json_decode( $line_height, true );
-
-		$suffix = $control === 'body' ? 'px' : ( isset( $font_size['suffix'] ) ? $font_size['suffix'] : 'em' );
-
-		$settings = array(
-			array(
-				'css_prop' => 'font-size',
-				'value'    => $font_size,
-				'suffix'   => $suffix,
-			),
-			array(
-				'css_prop' => 'line-height',
-				'value'    => $line_height,
-			),
+		$this->add_responsive_style(
+			[
+				[
+					'css_prop' => 'font-size',
+					'value'    => $value['fontSize'],
+					'suffix'   => $value['fontSize']['suffix'],
+				],
+				[
+					'css_prop' => 'line-height',
+					'value'    => $value['lineHeight'],
+				],
+				[
+					'css_prop' => 'letter-spacing',
+					'value'    => $value['letterSpacing'],
+					'suffix'   => 'px',
+				],
+			],
+			$selector
 		);
 
-		$this->add_responsive_style( $settings, $selector );
+		$this->add_style(
+			[
+				[
+					'css_prop' => 'text-transform',
+					'value'    => $value['textTransform'],
+				],
+				[
+					'css_prop' => 'font-weight',
+					'value'    => $value['fontWeight'],
+				],
+			],
+			$selector
+		);
+
+		if ( ! empty( $value['fontWeight'] ) ) {
+			if ( $control === 'neve_typeface_general' ) {
+				array_push( $this->body_weight, $value['fontWeight'] );
+			} else {
+				array_push( $this->heading_weights, $value['fontWeight'] );
+			}
+		}
+	}
+
+	/**
+	 * Enqueue google fonts in the editor.
+	 */
+	private function add_google_fonts() {
+		if ( ! empty( $this->headings_family ) ) {
+			Font_Manager::add_google_font( $this->headings_family, $this->heading_weights );
+		}
+		if ( ! empty( $this->body_family ) ) {
+			Font_Manager::add_google_font( $this->body_family, $this->body_weight );
+		}
 	}
 }

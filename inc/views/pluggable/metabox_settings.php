@@ -13,6 +13,19 @@ namespace Neve\Views\Pluggable;
  * @package Neve\Views\Pluggable
  */
 class Metabox_Settings {
+
+	/**
+	 * Context mapping for the post meta.
+	 *
+	 * @var array
+	 */
+	private $context_mapping = array(
+		'header'         => 'neve_meta_disable_header',
+		'title'          => 'neve_meta_disable_title',
+		'featured-image' => 'neve_meta_disable_featured_image',
+		'footer'         => 'neve_meta_disable_footer',
+	);
+
 	/**
 	 * Function that is run after instantiation.
 	 *
@@ -21,9 +34,58 @@ class Metabox_Settings {
 	public function init() {
 		add_filter( 'neve_sidebar_position', array( $this, 'filter_sidebar_position' ) );
 		add_filter( 'neve_container_class_filter', array( $this, 'filter_container_class' ), 100 );
-
+		add_filter( 'body_class', array( $this, 'body_classes' ) );
 		add_filter( 'neve_filter_toggle_content_parts', array( $this, 'filter_components_toggle' ), 100, 2 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'content_width' ), 999 );
+	}
+
+	/**
+	 * Check if we should account for the meta settings.
+	 *
+	 * @return bool
+	 */
+	private function has_settings() {
+		if ( ! is_single() && ! is_page() && ! $this->is_blog_static() ) {
+			return false;
+		}
+
+		$post_id = $this->get_post_id();
+
+		if ( $post_id === false ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add body classes contextually.
+	 *
+	 * @param array $classes the body classes.
+	 *
+	 * @return array
+	 */
+	public function body_classes( $classes ) {
+
+		if ( ! $this->has_settings() ) {
+			return $classes;
+		}
+
+		$post_id = $this->get_post_id();
+
+		foreach ( $this->context_mapping as $context => $meta_key ) {
+			$meta_value = get_post_meta( $post_id, $meta_key, true );
+
+			if ( empty( $meta_value ) ) {
+				continue;
+			}
+
+			if ( $meta_value === 'on' ) {
+				$classes[] = 'nv-without-' . $context;
+			}
+		}
+
+		return $classes;
 	}
 
 	/**
@@ -37,12 +99,13 @@ class Metabox_Settings {
 		}
 
 		$content_width_status = get_post_meta( $post_id, 'neve_meta_enable_content_width', true );
-
+		$content_width_status = empty( $content_width_status ) ? $this->get_content_width_status_default() : $content_width_status;
 		if ( $content_width_status !== 'on' ) {
 			return;
 		}
 
 		$meta_value = get_post_meta( $post_id, 'neve_meta_content_width', true );
+		$meta_value = empty( $meta_value ) ? $this->get_content_width_default() : $meta_value;
 
 		if ( empty( $meta_value ) ) {
 			return;
@@ -78,29 +141,18 @@ class Metabox_Settings {
 	 */
 	public function filter_components_toggle( $status, $context ) {
 
-		if ( ! is_single() && ! is_page() && ! $this->is_blog_static() ) {
+		if ( ! $this->has_settings() ) {
 			return $status;
 		}
 
 		$post_id = $this->get_post_id();
 
-		if ( $post_id === false ) {
-			return $status;
-		}
-
-		$context_mapping = array(
-			'header'         => 'neve_meta_disable_header',
-			'title'          => 'neve_meta_disable_title',
-			'featured-image' => 'neve_meta_disable_featured_image',
-			'footer'         => 'neve_meta_disable_footer',
-		);
-
 		/* If context isn't valid, bail. */
-		if ( ! array_key_exists( $context, $context_mapping ) ) {
+		if ( ! array_key_exists( $context, $this->context_mapping ) ) {
 			return $status;
 		}
 
-		$meta_value = get_post_meta( $post_id, $context_mapping[ $context ], true );
+		$meta_value = get_post_meta( $post_id, $this->context_mapping[ $context ], true );
 
 		if ( empty( $meta_value ) ) {
 			return $status;
@@ -124,7 +176,7 @@ class Metabox_Settings {
 		if (
 			! is_single()
 			&& ! is_page()
-			&& ( class_exists( 'WooCommerce' ) && ! is_shop() )
+			&& ( class_exists( 'WooCommerce', false ) && ! is_shop() )
 			&& ! $this->is_blog_static() ) {
 			return $position;
 		}
@@ -136,7 +188,8 @@ class Metabox_Settings {
 		}
 
 		$meta_value = get_post_meta( $post_id, 'neve_meta_sidebar', true );
-		if ( empty( $meta_value ) ) {
+		$meta_value = empty( $meta_value ) ? $this->get_sidebar_default() : $meta_value;
+		if ( empty( $meta_value ) || $meta_value === 'default' ) {
 			return $position;
 		}
 
@@ -165,7 +218,7 @@ class Metabox_Settings {
 
 		$meta_value = get_post_meta( $post_id, 'neve_meta_container', true );
 
-		if ( empty( $meta_value ) ) {
+		if ( empty( $meta_value ) || $meta_value === 'default' ) {
 			return $class;
 		}
 
@@ -219,5 +272,44 @@ class Metabox_Settings {
 	 */
 	private function is_blog_static() {
 		return ( get_option( 'show_on_front' ) === 'page' && is_home() );
+	}
+
+	/**
+	 * Get content width status default.
+	 *
+	 * @return string
+	 */
+	private function get_content_width_status_default() {
+		if ( (int) $this->get_post_id() === (int) get_option( 'woocommerce_checkout_page_id' ) ) {
+			return 'on';
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get content width status.
+	 *
+	 * @return int|string
+	 */
+	private function get_content_width_default() {
+		if ( (int) $this->get_post_id() === (int) get_option( 'woocommerce_checkout_page_id' ) ) {
+			return 100;
+		}
+
+		return 70;
+	}
+
+	/**
+	 * Get sidebar default.
+	 *
+	 * @return string
+	 */
+	private function get_sidebar_default() {
+		if ( (int) $this->get_post_id() === (int) get_option( 'woocommerce_checkout_page_id' ) ) {
+			return 'full-width';
+		}
+
+		return '';
 	}
 }

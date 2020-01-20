@@ -3,6 +3,7 @@
     .added_to_cart {
       margin-top: 1em;
     }
+
     .button.added {
       display: none;
     }
@@ -12,16 +13,20 @@
   a.button.alt,
   button.button.alt,
   input.button.alt,
-  button:not(.customize-partial-edit-shortcut-button),
   button.button,
   input.button,
   .button,
   a.button,
   #respond input#submit {
-    @include button();
+    @extend %nv-woo-button;
+  }
+
+  a.button.button-primary {
+    @extend %nv-woo-button-primary;
   }
 
   a.button.alt,
+  button.button.alt,
   a.button.checkout-button,
   button.button:disabled,
   button.button:disabled[disabled],
@@ -30,23 +35,30 @@
   .actions > button[type=submit],
   .checkout.wc-forward,
   button#place_order,
-  .return-to-shop > .button {
-    @include button();
-    @include button-primary();
+  a.add_to_cart_button,
+  a.product_type_grouped,
+  a.product_type_external,
+  a.product_type_variable,
+  .return-to-shop > .button,
+  .button.woocommerce-form-login__submit {
+    @extend %nv-woo-button;
+    @extend %nv-woo-button-primary;
   }
 
+  .button.button-secondary.more-details,
+  .woocommerce .price_slider_amount button.button,
   button.button,
-    //.button.product_type_variable.add_to_cart_button,
+  a.added_to_cart,
   .checkout_coupon button.button,
   #review_form #respond input#submit {
-    @include button();
-    @include button-secondary();
+    @extend %nv-woo-button;
+    @extend %nv-woo-button-secondary;
   }
 
-  #nv-primary-navigation .woocommerce-mini-cart__buttons.buttons a.button.wc-forward:not(.checkout),
+  ul[id^="nv-primary-navigation"] .woocommerce-mini-cart__buttons.buttons a.button.wc-forward:not(.checkout),
   .woocommerce-mini-cart__buttons.buttons a.button.wc-forward:not(.checkout) {
-    @include button();
-    @include button-secondary();
+    @extend %nv-woo-button;
+    @extend %nv-woo-button-secondary;
   }
 }
 
@@ -58,13 +70,14 @@
   padding-right: $spacing;
 }
 
-#nv-primary-navigation .nv-nav-cart {
+ul[id^="nv-primary-navigation"] .nv-nav-cart {
   a.button.wc-forward:not(.checkout) {
-    @include button();
-    @include button-secondary();
+    @extend %nv-woo-button;
+    @extend %nv-woo-button-secondary;
   }
+
   a.button.checkout.wc-forward {
-    @include button();
-    @include button-primary();
+    @extend %nv-woo-button;
+    @extend %nv-woo-button-primary;
   }
 }

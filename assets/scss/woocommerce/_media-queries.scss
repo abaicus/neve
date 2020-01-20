@@ -1,9 +1,8 @@
 @media (min-width: #{$tablet-sm}) {
-
+  @include generic--tablet-sm();
 }
 
 @media (min-width: #{$tablet}) {
-  @include checkout--tablet();
   @include cart--tablet();
   @include product--tablet();
 }
@@ -13,6 +12,8 @@
   @include shop-sidebar--laptop();
   @include cart--laptop();
   @include shop-loop--laptop();
+  @include checkout--laptop();
+  @include account--laptop();
 }
 
 @media (min-width: #{$desktop}) {
