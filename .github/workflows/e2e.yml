@@ -1,0 +1,19 @@
+name: E2E Testing
+on: [push, pull_request]
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: NPM install
+      run: npm install
+
+    - name: Install dependencies
+      run: composer install
+
+    - name: Docker Compose UP
+      run: | 
+        docker-compose up
+        wait 15
+        ./bin/run-e2e.sh
